@@ -5,6 +5,8 @@
 
 #include "Logger.h"
 
+#include "core/SpriteRenderer.h"
+#include "math/Vector2f.h"
 
 
 int main(){
@@ -24,40 +26,18 @@ int main(){
     glfwMakeContextCurrent(window);
     EngineF::GLLOG([]{glewInit();});
     
-    float data[] = {
-        -0.5f, -0.5f,
-        0.5f, -0.5f,
-        0.0f, 0.5f 
-    };
+    EngineF::Vector2f one(1.0f,2.0f);
+    EngineF::Vector2f two(2.0f,3.0f);
 
-    unsigned int VAO;
-    EngineF::GLLOG([&VAO]{glGenVertexArrays(1, &VAO);});
-    //glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    EngineF::Vector2f three = one + two;
 
-    unsigned int VBO;
-    
-    glGenBuffers(1, &VBO);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-    EngineF::GLLOG([data]{glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);});
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
-    glEnableVertexAttribArray(0);
-
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
-    EngineF::LOG(8, EngineF::LogType::MESSAGE);
+    EngineF::SpriteRenderer* spriteRenderer = new EngineF::SpriteRenderer();
+    EngineF::LOG(three.first, EngineF::LogType::MESSAGE);
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glBindVertexArray(VAO);
-
-        EngineF::GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 3);});
+        spriteRenderer->DrawSprite();
 
         glfwSwapBuffers(window);
 
