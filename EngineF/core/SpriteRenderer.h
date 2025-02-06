@@ -4,18 +4,21 @@
 #include "GLFW/glfw3.h"
 
 #include "../Logger.h"
-
+#include "Shader.h"
 
 namespace EngineF{
     class SpriteRenderer{
         private:
+
+            Shader m_Shader;
+
             unsigned int m_QuadVAO;
             void initQuadVAO();
 
         public:
-            void DrawSprite();
+            void drawSprite();
 
-            SpriteRenderer();
+            SpriteRenderer(Shader& shader);
             ~SpriteRenderer();
     };
 }

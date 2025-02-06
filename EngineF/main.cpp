@@ -6,10 +6,16 @@
 #include "Logger.h"
 
 #include "core/SpriteRenderer.h"
-#include "math/Vector2f.h"
+#include "core/Shader.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 
-int main(){
+
+
+int main(int argc, char** argv){
      GLFWwindow* window;
     if (!glfwInit())
         exit(-1);
@@ -26,18 +32,19 @@ int main(){
     glfwMakeContextCurrent(window);
     EngineF::GLLOG([]{glewInit();});
     
-    EngineF::Vector2f one(1.0f,2.0f);
-    EngineF::Vector2f two(2.0f,3.0f);
+    glm::mat4 proj = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 
-    EngineF::Vector2f three = one + two;
+    EngineF::Shader shader("./../../EngineF/shaders/basic.vertex", "./../../EngineF/shaders/basic.fragment", "basic");
 
-    EngineF::SpriteRenderer* spriteRenderer = new EngineF::SpriteRenderer();
-    EngineF::LOG(three.first, EngineF::LogType::MESSAGE);
+    EngineF::SpriteRenderer* spriteRenderer = new EngineF::SpriteRenderer(shader);
+
+
+
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        spriteRenderer->DrawSprite();
+        spriteRenderer->drawSprite();
 
         glfwSwapBuffers(window);
 

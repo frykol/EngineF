@@ -2,7 +2,7 @@
 
 namespace EngineF
 {
-    SpriteRenderer::SpriteRenderer(){
+    SpriteRenderer::SpriteRenderer(Shader& shader): m_Shader(shader){
         initQuadVAO();
     }
 
@@ -35,7 +35,8 @@ namespace EngineF
         GLLOG([]{glBindVertexArray(0);});
     }
 
-    void SpriteRenderer::DrawSprite(){
+    void SpriteRenderer::drawSprite(){
+        m_Shader.bind();
         GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
         GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});
         GLLOG([]{glBindVertexArray(0);});

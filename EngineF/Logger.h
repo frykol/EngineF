@@ -9,6 +9,7 @@
 namespace EngineF{
     #define GLLOG(x) GLLog(x, __FILE__, __LINE__)
     #define LOG(x,y) Log(x, y, __FILE__, __LINE__)
+    #define LOG_E(x,y,z) Log(x, y,__FILE__, __LINE__,z)
 
     enum LogType{
         MESSAGE = 0,
@@ -39,16 +40,25 @@ namespace EngineF{
         return "Type not supported";
     }
 
-    inline void Log(std::any message, LogType type, const char* file, int line){
+    inline void Log(std::any message, LogType type, const char* file, int line, bool allInfo=false){
         std::string msg = CastToString(message);
         if(type == LogType::MESSAGE){
-            std::cout << "\033[1;37m" << "[LOG MESSAGE]: "  << msg << std::endl << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            std::cout << "\033[1;37m" << "[LOG MESSAGE]: "  << msg << "\033[0m" << std::endl; 
+            if(allInfo){
+                std::cout << "\033[1;37m" << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            }
         }
         if(type == LogType::WARNING){
-            std::cout << "\033[1;33m" << "[LOG WARNING]: "  << msg << std::endl << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            std::cout << "\033[1;33m" << "[LOG WARNING]: "  << msg << "\033[0m" << std::endl;
+            if(allInfo){
+                std::cout << "\033[1;33m" << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            }
         }
         if(type == LogType::ERROR){
-            std::cout << "\033[1;31m" << "[LOG ERROR]: "  << msg << std::endl << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            std::cout << "\033[1;31m" << "[LOG ERROR]: "  << msg <<  "\033[0m" << std::endl;
+            if(allInfo){
+                std::cout << "\033[1;31m" << "File: " <<file << std::endl << "Line: " << line << "\033[0m" << std::endl;
+            }
         }
     }
 }
