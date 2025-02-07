@@ -4,6 +4,10 @@
 #include "GLFW/glfw3.h"
 #include "../Logger.h"
 
+#include "glm/glm.hpp"
+#include <glm/gtc/type_ptr.hpp>
+
+
 namespace EngineF{
     class Shader{
         private:
@@ -28,5 +32,8 @@ namespace EngineF{
             void unBind();
             const char* getName(){return m_Name; }
             void setName(const char* name) {m_Name = name; }
+
+            void setUniform3f(const char* uniformName, float f1, float f2, float f3);
+            void setUniformMat4(const char* uniformName, glm::mat4& matrix);
     };
 }

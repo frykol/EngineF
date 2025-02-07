@@ -9,19 +9,15 @@
 #include "core/Shader.h"
 
 #include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
-
 
 
 
 int main(int argc, char** argv){
-     GLFWwindow* window;
+    GLFWwindow* window;
     if (!glfwInit())
         exit(-1);
 
 
-    /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
     if (!window)
     {
@@ -32,19 +28,23 @@ int main(int argc, char** argv){
     glfwMakeContextCurrent(window);
     EngineF::GLLOG([]{glewInit();});
     
-    glm::mat4 proj = glm::ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f);
 
     EngineF::Shader shader("./../../EngineF/shaders/basic.vertex", "./../../EngineF/shaders/basic.fragment", "basic");
 
     EngineF::SpriteRenderer* spriteRenderer = new EngineF::SpriteRenderer(shader);
 
+    shader.setUniform3f("cl", 0.5f, 0.2f, 1.0f);
+
+    glm::mat4 camera = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f, -1.0f, 1.0f);
+
+    shader.setUniformMat4("u_Projection", camera);
 
 
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        spriteRenderer->drawSprite();
+        spriteRenderer->drawSprite(glm::vec2(-100.0f,-100.0f), glm::vec2(400.0f, 200.0f), glm::vec3(1.0f,0.2f,0.2f));
 
         glfwSwapBuffers(window);
 

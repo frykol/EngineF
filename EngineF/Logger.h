@@ -37,7 +37,7 @@ namespace EngineF{
     
         if (value.type() == typeid(int))
             return std::to_string(std::any_cast<int> (value));
-        return "Type not supported";
+        return "Log type not supported";
     }
 
     inline void Log(std::any message, LogType type, const char* file, int line, bool allInfo=false){

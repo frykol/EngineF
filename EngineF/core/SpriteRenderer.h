@@ -6,6 +6,9 @@
 #include "../Logger.h"
 #include "Shader.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 namespace EngineF{
     class SpriteRenderer{
         private:
@@ -16,7 +19,7 @@ namespace EngineF{
             void initQuadVAO();
 
         public:
-            void drawSprite();
+            void drawSprite(glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             SpriteRenderer(Shader& shader);
             ~SpriteRenderer();

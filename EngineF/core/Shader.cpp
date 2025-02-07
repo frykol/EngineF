@@ -77,4 +77,17 @@ namespace EngineF{
         glUseProgram(0);
     }
 
+
+
+    void Shader::setUniform3f(const char* uniformName, float f1, float f2, float f3){
+        bind();
+        glUniform3f(glGetUniformLocation(m_ID, uniformName), f1, f2, f3);
+    }   
+
+
+    void Shader::setUniformMat4(const char* uniformName, glm::mat4& matrix){
+        bind();
+        glUniformMatrix4fv(glGetUniformLocation(m_ID, uniformName),1,false, glm::value_ptr(matrix));
+
+    }
 }
