@@ -25,6 +25,6 @@ namespace EngineF{
             void drawSpriteNoTexture(glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             SpriteRenderer(Shader& shader);
-            ~SpriteRenderer();
+            
     };
 }

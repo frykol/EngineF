@@ -1,59 +1,11 @@
-#include <iostream>
-
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
-
-#include "Logger.h"
-
-#include "core/SpriteRenderer.h"
-#include "core/Shader.h"
-
-#include "core/Texture.h"
-
-#include "glm/glm.hpp"
+#include "game/Game.h"
 
 
 
 int main(int argc, char** argv){
-    GLFWwindow* window;
-    if (!glfwInit())
-        exit(-1);
-
-
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        exit(-1);
-    }
-
-    glfwMakeContextCurrent(window);
-    EngineF::GLLOG([]{glewInit();});
     
-
-    EngineF::Shader shader("./../../EngineF/shaders/basic.vertex", "./../../EngineF/shaders/basic.fragment", "basic");
-
-    EngineF::SpriteRenderer* spriteRenderer = new EngineF::SpriteRenderer(shader);
-
-
-    glm::mat4 camera = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f, -1.0f, 1.0f);
-
-    shader.setUniformMat4("u_Projection", camera);
-
-    EngineF::Texture texture("../../EngineF/textures/brick.jpg");
-
-    //EngineF::LOG(shader.getName(), EngineF::LogType::MESSAGE);
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        spriteRenderer->drawSprite(texture, glm::vec2(100.0f,100.0f), glm::vec2(400.0f, 200.0f), glm::vec3(1.0f,0.2f,0.2f));
-
-        glfwSwapBuffers(window);
-
-        glfwPollEvents();
-    }
+    Game game(1280.0f, 720.0f);
+    game.init();
 
     return 0;
 }

@@ -45,6 +45,7 @@ namespace EngineF{
         glDeleteShader(fragmentShader);
 
         m_Status = 1;
+        glUseProgram(0);
     }
 
     std::string Shader::readShader(const char* shaderPath){
