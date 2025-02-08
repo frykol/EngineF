@@ -27,24 +27,33 @@ void Game::init(){
     EngineF::ResourceManager::getInstance().loadTexture("../../EngineF/textures/brick.jpg", "brick");
 
     glm::mat4 projection = glm::ortho(0.0f,m_Width,m_Height,0.0f, -1.0f, 1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
 
     m_Renderer = std::make_shared<EngineF::SpriteRenderer>(*shader);
-
+    shader->setUniformMat4("u_View", view);
     shader->setUniformMat4("u_Projection",projection);
+    
     shader->unBind();
 
     update();
 }
 
 void Game::update(){
+    EngineF::Scene scene("basic test");
+    scene.testScene();
 
+    std::vector<std::shared_ptr<EngineF::GameObject>>& gameObjects = scene.getGameObjects();
     while (!glfwWindowShouldClose(m_Window))
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        m_Renderer->clear(glm::vec3(0.3f,0.3f,0.3f));
         m_Renderer->drawSprite(*EngineF::ResourceManager::getInstance().getTexture("brick"),glm::vec2(100.0f, 100.0f), glm::vec2(200.0f,100.0f), glm::vec3(1.0f,0.4f,0.2f));
 
-        glfwSwapBuffers(m_Window);
+        for(int i = 0; i<gameObjects.size(); i++){
+            m_Renderer->drawSprite(*gameObjects[i]->getTexture(), gameObjects[i]->getPosition(), gameObjects[i]->getSize(), gameObjects[i]->getColor());
+        }
 
+        m_Renderer->swapBuffers(m_Window);
+    
         glfwPollEvents();
     }
 }

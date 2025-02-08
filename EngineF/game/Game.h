@@ -10,6 +10,9 @@
 #include "../core/SpriteRenderer.h"
 #include "../core/ResourceManager.h"
 
+#include "../scene/GameObject.h"
+#include "../scene/Scene.h"
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -30,4 +33,4 @@ class Game{
         Game(int width, int height);
         void init();
         
-    };
+};

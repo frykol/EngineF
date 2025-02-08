@@ -63,11 +63,21 @@ namespace EngineF
         m_Shader.setUniformMat4("u_Model", model);
         m_Shader.setUniform3f("u_Color", color.x,color.y,color.z);
 
+        
         glActiveTexture(GL_TEXTURE0);
         texture.bind();
 
         GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
         GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});
         GLLOG([]{glBindVertexArray(0);});
+    }
+
+    void SpriteRenderer::clear(glm::vec3 color){
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(color.x, color.y, color.z, 1.0f);
+    }
+
+    void SpriteRenderer::swapBuffers(GLFWwindow* window){
+        glfwSwapBuffers(window);
     }
 }
