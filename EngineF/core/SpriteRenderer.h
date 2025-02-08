@@ -5,6 +5,7 @@
 
 #include "../Logger.h"
 #include "Shader.h"
+#include "Texture.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -19,7 +20,9 @@ namespace EngineF{
             void initQuadVAO();
 
         public:
-            void drawSprite(glm::vec2 position, glm::vec2 size, glm::vec3 color);
+            void drawSprite(Texture& texture,glm::vec2 position, glm::vec2 size, glm::vec3 color);
+
+            void drawSpriteNoTexture(glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             SpriteRenderer(Shader& shader);
             ~SpriteRenderer();

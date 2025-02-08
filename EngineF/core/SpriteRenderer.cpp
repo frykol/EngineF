@@ -9,11 +9,11 @@ namespace EngineF
 
     void SpriteRenderer::initQuadVAO(){
         float data[]={
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            0.0f, 0.0f,
+            0.0f, 1.0f, 
+            1.0f, 0.0f, 
+            0.0f, 0.0f, 
 
-            0.0f, 1.0f,
+            0.0f, 1.0f, 
             1.0f, 1.0f,
             1.0f, 0.0f
         };
@@ -35,7 +35,23 @@ namespace EngineF
         GLLOG([]{glBindVertexArray(0);});
     }
 
-    void SpriteRenderer::drawSprite(glm::vec2 position, glm::vec2 size, glm::vec3 color){
+    void SpriteRenderer::drawSpriteNoTexture(glm::vec2 position, glm::vec2 size, glm::vec3 color){
+        m_Shader.bind();
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = translate(model, glm::vec3(position, 0.0f));
+
+        model = glm::scale(model, glm::vec3(size, 1.0f));
+
+        m_Shader.setUniformMat4("u_Model", model);
+        m_Shader.setUniform3f("u_Color", color.x,color.y,color.z);
+
+        GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
+        GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});
+        GLLOG([]{glBindVertexArray(0);});
+    }
+
+    void SpriteRenderer::drawSprite(Texture& texture,glm::vec2 position, glm::vec2 size, glm::vec3 color){
 
         m_Shader.bind();
 
@@ -47,6 +63,8 @@ namespace EngineF
         m_Shader.setUniformMat4("u_Model", model);
         m_Shader.setUniform3f("u_Color", color.x,color.y,color.z);
 
+        glActiveTexture(GL_TEXTURE0);
+        texture.bind();
 
         GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
         GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});

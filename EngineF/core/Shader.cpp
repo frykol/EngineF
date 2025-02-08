@@ -19,8 +19,11 @@ namespace EngineF{
             LOG("Fragment file does not exist", LogType::ERROR);
             return;
         }
-        const char* vertexSource = readShader(m_VertexPath);
-        const char* fragmentSource = readShader(m_FragmentPath);
+        std::string vertexString = readShader(m_VertexPath);
+        std::string fragmentString = readShader(m_FragmentPath);
+
+        const char* vertexSource = vertexString.c_str();
+        const char* fragmentSource = fragmentString.c_str();
 
         unsigned int vertexShader;
         unsigned int fragmentShader;
@@ -44,15 +47,14 @@ namespace EngineF{
         m_Status = 1;
     }
 
-    const char* Shader::readShader(const char* shaderPath){
+    std::string Shader::readShader(const char* shaderPath){
         std::ifstream file(shaderPath);
         std::string line;
         std::string shaderSource;
         while(std::getline(file, line)){
-            
             shaderSource.append(line + "\n");
         }
-        return shaderSource.c_str();
+        return shaderSource;
     }
 
     bool Shader::doesFileExist(const char* filepath){

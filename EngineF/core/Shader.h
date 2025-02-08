@@ -20,7 +20,7 @@ namespace EngineF{
             const char* m_FragmentPath;
             
 
-            const char* readShader(const char* shaderPath);
+            std::string readShader(const char* shaderPath);
             void createShader();
 
             bool doesFileExist(const char* filepath);
