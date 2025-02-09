@@ -1,7 +1,14 @@
 #include "Game.h"
 
 Game::Game(int width, int height): m_Width(width), m_Height(height){
+    initOpenGl();
+    init();
+    update();
+}
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
+    Game* game = reinterpret_cast<Game*>(glfwGetWindowUserPointer(window));    
+    game->processInput(key, scancode, action, mods);
 }
 
 void Game::initOpenGl(){
@@ -17,11 +24,14 @@ void Game::initOpenGl(){
         }
 
     glfwMakeContextCurrent(m_Window);
+    
+    glfwSetKeyCallback(m_Window, key_callback);
+
     EngineF::GLLOG([]{glewInit();});
 }
 
 void Game::init(){
-    initOpenGl();
+    
 
     std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("../../EngineF/shaders/basic.vertex","../../EngineF/shaders/basic.fragment", "basic");
     EngineF::ResourceManager::getInstance().loadTexture("../../EngineF/textures/brick.jpg", "brick");
@@ -35,40 +45,56 @@ void Game::init(){
     
     shader->unBind();
 
-    update();
+
 }
 
 void Game::update(){
+    
     EngineF::Scene scene("basic test");
-    scene.testScene();
+    m_CurrentScene = &scene;
+    m_CurrentScene->testScene();
+    
 
-    std::vector<std::shared_ptr<EngineF::GameObject>>& gameObjects = scene.getGameObjects();
-
-    std::shared_ptr<EngineF::GameObject> testPlayer =  gameObjects[0];
+    EngineF::GameObject& testPlayer = m_CurrentScene->getGameObject(0);
 
     float dir = 1;
+    int size = m_CurrentScene->getGameObjects().size();
+    EngineF::LOG(size, EngineF::LogType::MESSAGE);
+
+    EngineF::GameObject& test = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
+    glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
+
+    testPlayer.addChild(&test);
 
     while (!glfwWindowShouldClose(m_Window))
     {   
         
 
-        m_Renderer->clear(glm::vec3(0.3f,0.3f,0.3f));
-        for(int i = 0; i<gameObjects.size(); i++){
-            m_Renderer->drawSprite(*gameObjects[i]->getTexture(), gameObjects[i]->getPosition(), gameObjects[i]->getSize(), gameObjects[i]->getColor());
+        EngineF::SpriteRenderer::clear(glm::vec3(0.3f,0.3f,0.3f));
+        for(int i = 0; i< m_CurrentScene->getGameObjects().size(); i++){
+           m_CurrentScene->getGameObject(i).Draw(*m_Renderer);
         }
         
-        testPlayer->setPositionX(testPlayer->getPositionX() + 100.0f * dir * EngineF::SpriteRenderer::getDeltaTime());
+        testPlayer.setPositionX(testPlayer.getPositionX() + 100.0f * dir * EngineF::SpriteRenderer::getDeltaTime());
 
 
-        if(testPlayer->getPositionX() <= 0.0f || testPlayer->getPositionX() + testPlayer->getSize().x >= m_Width){
+        if(testPlayer.getPositionX() <= 0.0f || testPlayer.getPositionX() + testPlayer.getSize().x >= m_Width){
             dir *= -1;
         }
 
-        m_Renderer->swapBuffers(m_Window);
-    
+        EngineF::SpriteRenderer::swapBuffers(m_Window);
+
+
         glfwPollEvents();
 
         
-        
+    }
+   
+}
+
+void Game::processInput(int key, int scancode, int action, int mods){
+    if (key == GLFW_KEY_E && action == GLFW_PRESS){
+        EngineF::LOG("EZ", EngineF::LogType::MESSAGE);
+        m_CurrentScene->removeGameObject(0);
     }
 }

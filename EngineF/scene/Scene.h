@@ -17,11 +17,11 @@ namespace EngineF{
             std::string m_Name;
 
             glm::mat4 m_Camera;
-            std::vector<std::shared_ptr<GameObject>> m_GameObjects;
+            std::vector<std::unique_ptr<GameObject>> m_GameObjects;
 
             bool m_IsConstructed;
 
-            std::vector<std::shared_ptr<GameObject>> m_ErrorObject;
+            std::vector<std::unique_ptr<GameObject>> m_ErrorObject;
         public:
 
             Scene(const std::string& m_Name, glm::mat4 camera = glm::mat4(1.0f));
@@ -36,9 +36,12 @@ namespace EngineF{
             void setCamera(glm::mat4 camera);
             glm::mat4 getCamera();
 
+            GameObject& addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
-            std::vector<std::shared_ptr<GameObject>>& getGameObjects();
+            void removeGameObject(int index);
 
-            std::shared_ptr<GameObject> getGameObject(int index);
+            std::vector<std::unique_ptr<GameObject>>& getGameObjects();
+
+            GameObject& getGameObject(int index);
     };
 }

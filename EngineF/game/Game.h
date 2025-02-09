@@ -22,6 +22,7 @@ class Game{
     private:
         GLFWwindow* m_Window;
         std::shared_ptr<EngineF::SpriteRenderer> m_Renderer;
+        EngineF::Scene* m_CurrentScene;
 
         float m_Width;
         float m_Height;
@@ -32,5 +33,5 @@ class Game{
     public:
         Game(int width, int height);
         void init();
-        
+        void processInput(int key, int scancode, int action, int mods);
 };
