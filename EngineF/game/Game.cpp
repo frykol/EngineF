@@ -43,17 +43,32 @@ void Game::update(){
     scene.testScene();
 
     std::vector<std::shared_ptr<EngineF::GameObject>>& gameObjects = scene.getGameObjects();
-    while (!glfwWindowShouldClose(m_Window))
-    {
-        m_Renderer->clear(glm::vec3(0.3f,0.3f,0.3f));
-        m_Renderer->drawSprite(*EngineF::ResourceManager::getInstance().getTexture("brick"),glm::vec2(100.0f, 100.0f), glm::vec2(200.0f,100.0f), glm::vec3(1.0f,0.4f,0.2f));
 
+    std::shared_ptr<EngineF::GameObject> testPlayer =  gameObjects[0];
+
+    float dir = 1;
+
+    while (!glfwWindowShouldClose(m_Window))
+    {   
+        
+
+        m_Renderer->clear(glm::vec3(0.3f,0.3f,0.3f));
         for(int i = 0; i<gameObjects.size(); i++){
             m_Renderer->drawSprite(*gameObjects[i]->getTexture(), gameObjects[i]->getPosition(), gameObjects[i]->getSize(), gameObjects[i]->getColor());
+        }
+        
+        testPlayer->setPositionX(testPlayer->getPositionX() + 100.0f * dir * EngineF::SpriteRenderer::getDeltaTime());
+
+
+        if(testPlayer->getPositionX() <= 0.0f || testPlayer->getPositionX() + testPlayer->getSize().x >= m_Width){
+            dir *= -1;
         }
 
         m_Renderer->swapBuffers(m_Window);
     
         glfwPollEvents();
+
+        
+        
     }
 }

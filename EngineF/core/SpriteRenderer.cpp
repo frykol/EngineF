@@ -2,6 +2,11 @@
 
 namespace EngineF
 {
+
+    float SpriteRenderer::m_CurrentFrame;
+    float SpriteRenderer::m_DeltaTime;
+    float SpriteRenderer::m_LastFrame;
+
     SpriteRenderer::SpriteRenderer(Shader& shader): m_Shader(shader){
         initQuadVAO();
     }
@@ -60,6 +65,7 @@ namespace EngineF
 
         model = glm::scale(model, glm::vec3(size, 1.0f));
 
+
         m_Shader.setUniformMat4("u_Model", model);
         m_Shader.setUniform3f("u_Color", color.x,color.y,color.z);
 
@@ -79,5 +85,14 @@ namespace EngineF
 
     void SpriteRenderer::swapBuffers(GLFWwindow* window){
         glfwSwapBuffers(window);
+    }
+
+
+    float SpriteRenderer::getDeltaTime(){
+        m_CurrentFrame = glfwGetTime();
+        m_DeltaTime = m_CurrentFrame - m_LastFrame;
+        m_LastFrame = m_CurrentFrame;
+
+        return m_DeltaTime;
     }
 }

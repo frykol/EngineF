@@ -23,6 +23,22 @@ namespace EngineF{
         m_Position = position;
     }
 
+    float GameObject::getPositionX(){
+        return m_Position.x;
+    }
+
+    void GameObject::setPositionX(float x){
+        m_Position.x = x;
+    }
+
+    float GameObject::getPositionY(){
+        return m_Position.y;
+    }
+
+    void GameObject::setPositionY(float y){
+        m_Position.y = y;
+    }
+
     glm::vec2 GameObject::getSize(){
         return m_Size;
     }

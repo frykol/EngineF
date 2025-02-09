@@ -23,6 +23,13 @@ namespace EngineF{
             void setPosition(glm::vec2 position);
             glm::vec2 getPosition();
 
+
+            void setPositionX(float x);
+            float getPositionX();
+
+            void setPositionY(float y);
+            float getPositionY();
+
             void setSize(glm::vec2 size);
             glm::vec2 getSize();
 

@@ -8,9 +8,13 @@ namespace EngineF{
 
 
     void Scene::testScene(){
-        for(int i = 0; i<10; i++){
-            std::shared_ptr<GameObject> testGameObject = std::make_shared<GameObject>(ResourceManager::getInstance().getTexture("brick"), glm::vec2(50.0f + i * 110.0f, 50.0f + i * 50.0f),
-                                        glm::vec2(100.0f,100.0f), glm::vec3(0.4f,1.0f,0.4f));
+        float maxLen = 10;
+        std::shared_ptr<GameObject> testGameObject = std::make_shared<GameObject>(ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
+                                        glm::vec2(300.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
+            m_GameObjects.push_back(testGameObject);
+        for(float i = 0; i<maxLen; i++){
+            std::shared_ptr<GameObject> testGameObject = std::make_shared<GameObject>(ResourceManager::getInstance().getTexture("brick"), glm::vec2(0 + i * (1280.0f/maxLen), 0),
+                                        glm::vec2(1280.0f/maxLen,100.0f), glm::vec3(0.4f,1.0f,0.4f));
             m_GameObjects.push_back(testGameObject);
         }
         m_IsConstructed = true;
