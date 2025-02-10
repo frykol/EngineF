@@ -20,9 +20,9 @@ namespace EngineF{
         m_IsConstructed = true;
     }
 
-    GameObject& Scene::addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color){
+    GameObject* Scene::addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color){
         std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>(texture, position, size, color);
-        GameObject& gameObjectToReturn = *gameObject;
+        GameObject* gameObjectToReturn = gameObject.get();
         m_GameObjects.push_back(std::move(gameObject));
         return gameObjectToReturn;
     }
@@ -55,20 +55,26 @@ namespace EngineF{
         return m_GameObjects;
     }
 
-    GameObject& Scene::getGameObject(int index){
+    GameObject* Scene::getGameObject(int index){
         if(!m_IsConstructed){
             std::string message = "Scene: " + m_Name + " is not constructed";
             LOG_E(message, LogType::ERROR, true);
-            return *m_ErrorObject[0];
+            return m_ErrorObject[0].get();
         }
         if(index >= m_GameObjects.size() || index < 0){
             std::string message = "Index out of range in: " + m_Name;
             LOG_E(message, LogType::ERROR, true);
-            return *m_ErrorObject[0];
+            return m_ErrorObject[0].get();
         }
-        return *m_GameObjects[index];
+        return m_GameObjects[index].get();
     }
 
-
+    void Scene::destroyNotAliveGameObjects(){
+        for(int i = 0; i<m_GameObjects.size(); i++){
+            if(!m_GameObjects[i]->getIsAlive()){
+                m_GameObjects.erase(m_GameObjects.begin() + i);
+            }
+        }
+    }
 
 }

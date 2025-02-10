@@ -36,12 +36,15 @@ namespace EngineF{
             void setCamera(glm::mat4 camera);
             glm::mat4 getCamera();
 
-            GameObject& addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
+            GameObject* addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             void removeGameObject(int index);
 
             std::vector<std::unique_ptr<GameObject>>& getGameObjects();
 
-            GameObject& getGameObject(int index);
+            GameObject* getGameObject(int index);
+
+
+            void destroyNotAliveGameObjects();
     };
 }

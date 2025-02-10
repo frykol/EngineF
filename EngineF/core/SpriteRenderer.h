@@ -33,7 +33,6 @@ namespace EngineF{
             SpriteRenderer(Shader& shader);
 
 
-            static float getDeltaTime();
             
     };
 }

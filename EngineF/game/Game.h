@@ -27,11 +27,21 @@ class Game{
         float m_Width;
         float m_Height;
 
+        float m_CurrentFrame;
+        float m_DeltaTime;
+        float m_LastFrame;
+
+        float m_MaxFPS = 1.0f/60.0f;
+
         void update();
 
         void initOpenGl();
+
+        void calculateDeltaTime();
+        
     public:
         Game(int width, int height);
         void init();
-        void processInput(int key, int scancode, int action, int mods);
+
+        void handleInput(int key, int scancode, int action, int mods);
 };

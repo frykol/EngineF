@@ -9,6 +9,7 @@ namespace EngineF{
 
     GameObject::~GameObject(){
         removeAllChildren();
+        LOG("Destroyed", LogType::WARNING);
     }
 
 
@@ -29,7 +30,8 @@ namespace EngineF{
 
     void GameObject::removeAllChildren(){
         for(GameObject* child : m_Childrens){
-            delete child;
+             child->setIsVisible(false);
+             child->setIsAlive(false);
         }
         m_Childrens.clear();
     }

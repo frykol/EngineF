@@ -88,11 +88,6 @@ namespace EngineF
     }
 
 
-    float SpriteRenderer::getDeltaTime(){
-        m_CurrentFrame = glfwGetTime();
-        m_DeltaTime = m_CurrentFrame - m_LastFrame;
-        m_LastFrame = m_CurrentFrame;
+    
 
-        return m_DeltaTime;
-    }
 }
