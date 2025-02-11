@@ -1,13 +1,20 @@
 #include "Game.h"
 
+
 Game::Game(int width, int height): m_Width(width), m_Height(height), m_DeltaTime(0), m_CurrentFrame(0), m_LastFrame(0){
+    m_KeyID = EngineF::EventManager::getInstance().addListener<EngineF::KeyPressEvent>([this](EngineF::KeyPressEvent& e){
+        this->handleInputTest(e);
+    });
     initOpenGl();
     init();
     update();
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
+
     Game* game = reinterpret_cast<Game*>(glfwGetWindowUserPointer(window));
+    EngineF::KeyPressEvent event(key, action);
+    EngineF::EventManager::getInstance().dispatchEvent(event);
     game->handleInput(key, scancode, action, mods);
 
 }
@@ -66,8 +73,12 @@ void Game::update(){
     EngineF::GameObject* test = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
 
+    EngineF::GameObject* testTwo = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
+    glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
+
     testPlayer->addChild(test);
 
+    test->addChild(testTwo);
 
     int frames = 0;
 
@@ -82,8 +93,6 @@ void Game::update(){
             gameObject.get()->Draw(*m_Renderer);
         }
 
-
-        
 
         while(m_DeltaTime >= 1.0){
             if(testPlayer == NULL)
@@ -112,6 +121,16 @@ void Game::handleInput(int key, int scancode, int action, int mods){
     if (key == GLFW_KEY_E && action == GLFW_PRESS){
         EngineF::LOG("yeet", EngineF::LogType::MESSAGE);
         m_CurrentScene->removeGameObject(0);
+    }
+    if (key == GLFW_KEY_W && action == GLFW_PRESS){
+        EngineF::LOG("yeet", EngineF::LogType::MESSAGE);
+    }
+}
+
+
+void Game::handleInputTest(EngineF::KeyPressEvent& e){
+    if (e.keyCode == GLFW_KEY_F && e.action == GLFW_PRESS){
+        EngineF::LOG("yeet", EngineF::LogType::MESSAGE);
     }
 }
 

@@ -10,6 +10,9 @@
 #include "../core/SpriteRenderer.h"
 #include "../core/ResourceManager.h"
 
+#include "../events/EventManager.h"
+#include "../events/KeyPressEvent.h"
+
 #include "../scene/GameObject.h"
 #include "../scene/Scene.h"
 
@@ -23,6 +26,8 @@ class Game{
         GLFWwindow* m_Window;
         std::shared_ptr<EngineF::SpriteRenderer> m_Renderer;
         EngineF::Scene* m_CurrentScene;
+
+        EngineF::ListenerID m_KeyID;
 
         float m_Width;
         float m_Height;
@@ -44,4 +49,6 @@ class Game{
         void init();
 
         void handleInput(int key, int scancode, int action, int mods);
+
+        void handleInputTest(EngineF::KeyPressEvent& e);
 };
