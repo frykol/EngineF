@@ -4,7 +4,9 @@ namespace EngineF{
     GameObject::GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color)
     :m_Texture(texture), m_Position(position), m_Size(size), m_Color(color), m_IsVisible(true), m_IsAlive(true), m_IsActive(false)
     {
-
+        GameObject* gameObj = this;
+        GameObjectCreatedEvent gameObjectCreatedEvent(gameObj);
+        EventManager::getInstance().dispatchEvent(gameObjectCreatedEvent);
     }
 
     GameObject::~GameObject(){

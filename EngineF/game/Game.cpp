@@ -70,15 +70,24 @@ void Game::update(){
     int size = m_CurrentScene->getGameObjects().size();
     EngineF::LOG(size, EngineF::LogType::MESSAGE);
 
-    EngineF::GameObject* test = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
+   // EngineF::GameObject* test = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
+   // glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
+
+   // EngineF::GameObject* testTwo = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
+    //glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
+
+    //EngineF::GameObject* test = 
+    EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
 
-    EngineF::GameObject* testTwo = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
+
+    //EngineF::GameObject* testTwo =
+    EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
 
-    testPlayer->addChild(test);
+   // testPlayer->addChild(test);
 
-    test->addChild(testTwo);
+    //test->addChild(testTwo);
 
     int frames = 0;
 

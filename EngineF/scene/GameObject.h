@@ -9,6 +9,9 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "../events/EventManager.h"
+#include "../events/GameObjectCreatedEvent.h"
+
 namespace EngineF{
     class GameObject{
         private:

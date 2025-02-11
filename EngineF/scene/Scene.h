@@ -11,6 +11,9 @@
 
 #include "../Logger.h"
 
+#include "../events/EventManager.h"
+#include "../events/GameObjectCreatedEvent.h"
+
 namespace EngineF{
     class Scene{
         private:
@@ -22,6 +25,8 @@ namespace EngineF{
             bool m_IsConstructed;
 
             std::vector<std::unique_ptr<GameObject>> m_ErrorObject;
+
+            ListenerID m_GameObjectCreatedID;
         public:
 
             Scene(const std::string& m_Name, glm::mat4 camera = glm::mat4(1.0f));
@@ -37,6 +42,8 @@ namespace EngineF{
             glm::mat4 getCamera();
 
             GameObject* addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
+
+            void addGameObjectTest(GameObjectCreatedEvent& e);
 
             void removeGameObject(int index);
 

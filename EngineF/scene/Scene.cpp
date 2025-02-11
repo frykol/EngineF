@@ -2,6 +2,12 @@
 
 namespace EngineF{
     Scene::Scene(const std::string& name, glm::mat4 camera): m_Name(name), m_Camera(camera){
+        m_GameObjectCreatedID = EngineF::EventManager::getInstance().addListener<EngineF::GameObjectCreatedEvent>([this](EngineF::GameObjectCreatedEvent& e){
+            this->addGameObjectTest(e);
+        });
+
+
+
         m_ErrorObject.push_back(std::make_unique<GameObject>(ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
         glm::vec2(600.0f,600.0f), glm::vec3(1.0f, 0.0f,0.0f)));
     }
@@ -25,6 +31,13 @@ namespace EngineF{
         GameObject* gameObjectToReturn = gameObject.get();
         m_GameObjects.push_back(std::move(gameObject));
         return gameObjectToReturn;
+    }
+
+    void Scene::addGameObjectTest(GameObjectCreatedEvent& e){
+        GameObject* g = e.gameObject;
+        std::unique_ptr<GameObject> gameObject(std::move(g));
+        //m_GameObjects.push_back(gameObject);
+        LOG("Added", LogType::MESSAGE);
     }
 
     void Scene::removeGameObject(int index){
