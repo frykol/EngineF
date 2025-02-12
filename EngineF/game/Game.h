@@ -5,10 +5,13 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
+#include "../core/Window.h"
+
 #include "../core/Shader.h"
 #include "../core/Texture.h"
 #include "../core/SpriteRenderer.h"
 #include "../core/ResourceManager.h"
+
 
 #include "../events/EventManager.h"
 #include "../events/KeyPressEvent.h"
@@ -25,7 +28,6 @@
 
 class Game{
     private:
-        GLFWwindow* m_Window;
         std::shared_ptr<EngineF::SpriteRenderer> m_Renderer;
         EngineF::Scene* m_CurrentScene;
 
@@ -42,7 +44,6 @@ class Game{
 
         void update();
 
-        void initOpenGl();
 
         void calculateDeltaTime();
         
@@ -50,7 +51,5 @@ class Game{
         Game(int width, int height);
         void init();
 
-        void handleInput(int key, int scancode, int action, int mods);
-
-        void handleInputTest(EngineF::KeyPressEvent& e);
+        void handleInput(EngineF::KeyPressEvent& e);
 };

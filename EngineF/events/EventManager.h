@@ -1,7 +1,8 @@
 #pragma once
 
-#include <functional>
 #include "Event.h"
+
+#include <functional>
 #include <unordered_map>
 #include <typeindex>
 

@@ -34,6 +34,8 @@ namespace EngineF{
     }
 
     void Scene::removeGameObject(int index){
+        if(m_GameObjects.empty())
+            return;
         m_GameObjects.erase(m_GameObjects.begin() + index);
     }
 
