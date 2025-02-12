@@ -12,9 +12,11 @@
 
 #include "../events/EventManager.h"
 #include "../events/KeyPressEvent.h"
+#include "../events/OnDrawEvent.h"
 
 #include "../scene/GameObject.h"
 #include "../scene/Scene.h"
+#include "Player.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

@@ -64,7 +64,8 @@ void Game::update(){
     m_CurrentScene->testScene();
     
 
-    EngineF::GameObject* testPlayer = m_CurrentScene->getGameObject(0);
+    EngineF::GameObject* testPlayer = new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
+    glm::vec2(300.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
     float dir = 1;
     int size = m_CurrentScene->getGameObjects().size();
@@ -76,18 +77,18 @@ void Game::update(){
    // EngineF::GameObject* testTwo = m_CurrentScene->addGameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
     //glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
 
-    //EngineF::GameObject* test = 
+    EngineF::GameObject* test = new
     EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
 
 
-    //EngineF::GameObject* testTwo =
+    EngineF::GameObject* testTwo = new
     EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
 
-   // testPlayer->addChild(test);
+    testPlayer->addChild(test);
 
-    //test->addChild(testTwo);
+    test->addChild(testTwo);
 
     int frames = 0;
 
@@ -96,21 +97,15 @@ void Game::update(){
         calculateDeltaTime();
 
         EngineF::SpriteRenderer::clear(glm::vec3(0.3f,0.3f,0.3f));
-        for(auto& gameObject : m_CurrentScene->getGameObjects()){
-            if(!gameObject.get()->getIsVisible())
-                continue;
-            gameObject.get()->Draw(*m_Renderer);
-        }
+
+        EngineF::OnDrawEvent onDrawEvent(m_Renderer.get());
+        EngineF::EventManager::getInstance().dispatchEvent(onDrawEvent);
 
 
         while(m_DeltaTime >= 1.0){
-            if(testPlayer == NULL)
-                continue;
 
-            testPlayer->setPositionX(testPlayer->getPositionX() + 10.0f * dir);
-            if(testPlayer->getPositionX() <= 0.0f || testPlayer->getPositionX() + testPlayer->getSize().x >= m_Width){
-                    dir *= -1;
-            }
+            EngineF::OnUserUpdateEvent onUserUpdate;
+            EngineF::EventManager::getInstance().dispatchEvent(onUserUpdate);
 
             m_CurrentScene->destroyNotAliveGameObjects();
             m_DeltaTime--;

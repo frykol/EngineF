@@ -7,18 +7,28 @@ namespace EngineF{
         GameObject* gameObj = this;
         GameObjectCreatedEvent gameObjectCreatedEvent(gameObj);
         EventManager::getInstance().dispatchEvent(gameObjectCreatedEvent);
+
+        m_OnDrawID = EventManager::getInstance().addListener<OnDrawEvent>([this](OnDrawEvent& e){
+            this->Draw(e);
+        });
+
+        m_OnUserUpdateID = EventManager::getInstance().addListener<OnUserUpdateEvent>([this](OnUserUpdateEvent& e){
+            this->userUpdate(e);
+        });
     }
 
     GameObject::~GameObject(){
         removeAllChildren();
+        EventManager::getInstance().removeListener<OnDrawEvent>(m_OnDrawID);
+        EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUserUpdateID);
         LOG("Destroyed", LogType::WARNING);
     }
 
 
-    void GameObject::Draw(SpriteRenderer& spriteRenderer){
+    void GameObject::Draw(OnDrawEvent& e){
         if(!m_IsVisible) 
             return;
-        spriteRenderer.drawSprite(*m_Texture, m_Position, m_Size, m_Color);
+        e.spriteRenderer->drawSprite(*m_Texture, m_Position, m_Size, m_Color);
     }
 
     void GameObject::setParent(GameObject* parent){

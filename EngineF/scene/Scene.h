@@ -14,6 +14,8 @@
 #include "../events/EventManager.h"
 #include "../events/GameObjectCreatedEvent.h"
 
+
+
 namespace EngineF{
     class Scene{
         private:
@@ -24,7 +26,6 @@ namespace EngineF{
 
             bool m_IsConstructed;
 
-            std::vector<std::unique_ptr<GameObject>> m_ErrorObject;
 
             ListenerID m_GameObjectCreatedID;
         public:

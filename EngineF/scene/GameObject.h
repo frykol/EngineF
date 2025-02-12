@@ -12,22 +12,33 @@
 #include "../events/EventManager.h"
 #include "../events/GameObjectCreatedEvent.h"
 
+#include "../events/OnDrawEvent.h"
+#include "../events/OnUserUpdateEvent.h"
+
 namespace EngineF{
     class GameObject{
-        private:
+        protected:
             std::shared_ptr<Texture> m_Texture;
             glm::vec2 m_Position;
             glm::vec2 m_Size;
             glm::vec3 m_Color;
 
-            GameObject* m_Parent;
-            std::vector<GameObject*> m_Childrens;
-
             bool m_IsActive;
             bool m_IsAlive;
             bool m_IsVisible;
-
+        private:
             
+
+            GameObject* m_Parent;
+            std::vector<GameObject*> m_Childrens;
+
+            ListenerID m_OnDrawID;
+            ListenerID m_OnUserUpdateID;
+            
+
+            void Init();
+            void Draw(OnDrawEvent& e);
+            void Update();
         public:
             GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
             ~GameObject();
@@ -38,11 +49,10 @@ namespace EngineF{
             void setPosition(glm::vec2 position);
             glm::vec2 getPosition();
 
-            void Init();
+            
 
-            void Draw(SpriteRenderer& renderer);
-
-            void Update();
+            virtual void userInit() {};
+            virtual void userUpdate(OnUserUpdateEvent& e) {};
 
             void setParent(GameObject* parent);
 
