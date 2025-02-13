@@ -5,6 +5,7 @@
 #include <functional>
 #include <unordered_map>
 #include <typeindex>
+#include <algorithm>
 
 namespace EngineF{
     using ListenerID = size_t;
