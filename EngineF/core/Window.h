@@ -10,13 +10,23 @@
 
 #include "../events/EventManager.h"
 #include "../events/GameObjectEvents.h"
+#include "../events/WindowEvents.h"
+
+#include "glm/glm.hpp"
 
 namespace EngineF{
     class Window{
         private:
             GLFWwindow* m_Window;
 
+            ListenerID m_OnWindowResizeID;
+
             bool m_Init = false;
+
+            int m_Width;
+            int m_Height;
+
+            glm::mat4 m_Projection;
 
             Window() = default;
             static Window* window;
@@ -32,7 +42,14 @@ namespace EngineF{
             void init(int width, int height);
             bool isRunning();
 
+
+            void onWindowResize(OnWindowResizeEvent& e);
+
             void swapBuffers();
+            int getWindowWidth();
+            int getWindowHeight();
+
+            glm::mat4& getProjection();
     };
     
 }

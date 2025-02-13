@@ -32,8 +32,6 @@ class Game{
 
         EngineF::ListenerID m_KeyID;
 
-        float m_Width;
-        float m_Height;
 
         float m_CurrentFrame;
         float m_DeltaTime;

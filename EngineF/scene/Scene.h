@@ -14,7 +14,7 @@
 #include "../events/EventManager.h"
 #include "../events/GameObjectCreatedEvent.h"
 
-
+#include "../components/CollisionComponent.h"
 
 namespace EngineF{
     class Scene{
@@ -22,6 +22,8 @@ namespace EngineF{
             std::string m_Name;
 
             glm::mat4 m_Camera;
+
+            
             std::vector<std::unique_ptr<GameObject>> m_GameObjects;
 
             bool m_IsConstructed;

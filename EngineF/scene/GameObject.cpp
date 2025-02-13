@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
 namespace EngineF{
-    GameObject::GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color)
-    :m_Texture(texture), m_Position(position), m_Size(size), m_Color(color), m_IsVisible(true), m_IsAlive(true), m_IsActive(false)
+    GameObject::GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name)
+    :m_Texture(texture), m_Position(position), m_Size(size), m_Color(color), m_IsVisible(true), m_IsAlive(true), m_IsActive(false), m_Name(name)
     {
         GameObject* gameObj = this;
         GameObjectCreatedEvent gameObjectCreatedEvent(gameObj);
@@ -16,16 +16,22 @@ namespace EngineF{
             this->update(e);
         });
 
+        m_OnUserInitID = EventManager::getInstance().addListener<OnUserInitEvent>([this](OnUserInitEvent& e){
+            this->userInit(e);
+        });
+
         m_OnUserUpdateID = EventManager::getInstance().addListener<OnUserUpdateEvent>([this](OnUserUpdateEvent& e){
             this->userUpdate(e);
         });
     }
 
     GameObject::~GameObject(){
-        m_Components.clear();
-        removeAllChildren();
         EventManager::getInstance().removeListener<OnDrawEvent>(m_OnDrawID);
         EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUserUpdateID);
+        EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUpdateID);
+        removeAllChildren();
+        m_Components.clear();
+        
         LOG("Destroyed", LogType::WARNING);
     }
 
@@ -37,8 +43,11 @@ namespace EngineF{
     }
 
     void GameObject::update(OnUpdateEvent& e){
-        for(auto& component : m_Components){
-            component->update();
+        if(m_Components.empty())
+            return;
+
+        for(int i = 0; i<m_Components.size(); i++){
+            m_Components[i]->update();
         }
     }
 
@@ -53,7 +62,6 @@ namespace EngineF{
 
     void GameObject::removeAllChildren(){
         for(GameObject* child : m_Childrens){
-             child->setIsVisible(false);
              child->setIsAlive(false);
         }
         m_Childrens.clear();
@@ -134,5 +142,9 @@ namespace EngineF{
 
     void GameObject::setIsVisible(bool isVisible){
         m_IsVisible = isVisible;
+    }
+
+    std::string& GameObject::getName(){
+        return m_Name;
     }
 }

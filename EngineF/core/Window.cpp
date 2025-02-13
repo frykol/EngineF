@@ -8,31 +8,50 @@ namespace EngineF{
         if (!glfwInit())
             exit(-1);
 
-    m_Window = glfwCreateWindow(width, height, "Engine F", NULL, NULL);
+        m_Width = width;
+        m_Height = height;
+        m_Window = glfwCreateWindow(width, height, "Engine F", NULL, NULL);
 
-    if (!m_Window)
-        {
-            glfwTerminate();
-            exit(-1);
-        }
+        if (!m_Window)
+            {
+                glfwTerminate();
+                exit(-1);
+            }
 
-    glfwMakeContextCurrent(m_Window);
+        glfwMakeContextCurrent(m_Window);
 
-    LOG("OOO", LogType::MESSAGE);
-    glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
-        KeyPressEvent keyPressEvent(key, action);
-        EventManager::getInstance().dispatchEvent(keyPressEvent);
-    });
+        m_OnWindowResizeID = EventManager::getInstance().addListener<OnWindowResizeEvent>([this](OnWindowResizeEvent& e){
+            this->onWindowResize(e);
+        });
 
-    glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos){
-        OnMouseMoveEvent onMouseMoveEvent(xpos, ypos);
-        EventManager::getInstance().dispatchEvent(onMouseMoveEvent);
-    });
+        LOG("OOO", LogType::MESSAGE);
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
+            KeyPressEvent keyPressEvent(key, action);
+            EventManager::getInstance().dispatchEvent(keyPressEvent);
+        });
 
-    GLLOG([]{glewInit();});
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos){
+            OnMouseMoveEvent onMouseMoveEvent(xpos, ypos);
+            EventManager::getInstance().dispatchEvent(onMouseMoveEvent);
+        });
+
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
+            OnWindowResizeEvent onWindowResizeEvent(width, height);
+            EventManager::getInstance().dispatchEvent(onWindowResizeEvent);
+        });
+
+        GLLOG([]{glewInit();});
+        m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f, -1.0f,1.0f);
+
+        m_Init = true;
+    }
 
 
-    m_Init = true;
+    void Window::onWindowResize(OnWindowResizeEvent& e){
+        m_Width = e.width;
+        m_Height = e.height;
+        glViewport(0, 0, e.width, e.height);
+        m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f,-1.0f,1.0f);
     }
 
     bool Window::isRunning(){
@@ -41,6 +60,17 @@ namespace EngineF{
 
     void Window::swapBuffers(){
         glfwSwapBuffers(m_Window);
+    }
+
+    int Window::getWindowWidth(){
+        return m_Width;
+    }
+
+    int Window::getWindowHeight(){
+        return m_Height;
+    }
+    glm::mat4& Window::getProjection(){
+        return m_Projection;
     }
 }
 

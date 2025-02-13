@@ -26,6 +26,7 @@ namespace EngineF{
             glm::vec2 m_Size;
             glm::vec3 m_Color;
 
+            std::string m_Name;
 
             bool m_IsActive;
             bool m_IsAlive;
@@ -39,6 +40,7 @@ namespace EngineF{
             std::vector<std::unique_ptr<Component>> m_Components;
 
             ListenerID m_OnDrawID;
+            ListenerID m_OnUserInitID;
             ListenerID m_OnUserUpdateID;
             ListenerID m_OnUpdateID;
 
@@ -46,7 +48,7 @@ namespace EngineF{
             void draw(OnDrawEvent& e);
             void update(OnUpdateEvent& e);
         public:
-            GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
+            GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "Test");
             virtual ~GameObject();
 
             void setTexture(std::shared_ptr<Texture> texture);
@@ -57,18 +59,19 @@ namespace EngineF{
 
             
 
-            virtual void userInit() {};
+            virtual void userInit(OnUserInitEvent& e) {};
             virtual void userUpdate(OnUserUpdateEvent& e) {};
 
+            virtual void onCollision(GameObject* collision) {};
+
             void setParent(GameObject* parent);
-
             void addChild(GameObject* child);
-
             void removeAllChildren();
 
             template<typename ComponentType>
             void addComponent(){
-                m_Components.push_back(std::unique_ptr<ComponentType>(new ComponentType(this)));
+                std::unique_ptr<ComponentType> g = std::make_unique<ComponentType>(this);
+                m_Components.push_back(std::move(g));
             }
 
 
@@ -92,5 +95,7 @@ namespace EngineF{
 
             bool getIsActive();
             void setIsActive(bool isActive);
+
+            std::string& getName();
     };
 }

@@ -13,6 +13,13 @@ namespace EngineF{
             const std::string GetEventType() const override {return "OnUpdateEvent";}
     };
 
+    class OnUserInitEvent : public Event{
+        public:
+            OnUserInitEvent() {};
+
+            const std::string GetEventType() const override {return "OnUserInitEvent";}
+    };
+
     class OnUserUpdateEvent : public Event{
         public:
             OnUserUpdateEvent(){};
