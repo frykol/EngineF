@@ -11,7 +11,7 @@ namespace EngineF{
             GameObject* m_Owner;
         public:
             Component(GameObject* gameObject): m_Owner(gameObject) {};
-            ~Component() {};
+            virtual ~Component() {};
 
             virtual void init() {};
             virtual void update() {};

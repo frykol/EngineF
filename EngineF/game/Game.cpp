@@ -36,6 +36,7 @@ void Game::update(){
     m_CurrentScene->testScene();
     
 
+
     EngineF::GameObject* testPlayer = new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
     glm::vec2(300.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
@@ -44,12 +45,14 @@ void Game::update(){
     new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
 
+    test->addComponent<EngineF::CollisionComponent>();
+
 
     EngineF::GameObject* testTwo =
     new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
 
-    testPlayer->addChild(test);
+    //testPlayer->addChild(test);
 
     test->addChild(testTwo);
 

@@ -8,6 +8,10 @@ Player::Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, gl
         addComponent<EngineF::CollisionComponent>();
     }
 
+Player::~Player(){
+    EngineF::EventManager::getInstance().removeListener<EngineF::OnMouseMoveEvent>(m_OnMouseMoveID);
+}
+
 void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
     // m_Position.x += 10.0f * m_Dir;
     // if(m_Position.x <= 0.0f || m_Position.x + m_Size.x >= 1280.0f){

@@ -47,7 +47,7 @@ namespace EngineF{
             void update(OnUpdateEvent& e);
         public:
             GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
-            ~GameObject();
+            virtual ~GameObject();
 
             void setTexture(std::shared_ptr<Texture> texture);
             std::shared_ptr<Texture> getTexture();

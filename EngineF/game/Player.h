@@ -11,6 +11,7 @@ class Player : public EngineF::GameObject{
         EngineF::ListenerID m_OnMouseMoveID;
     public:
         Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
+        ~Player();
         void userUpdate(EngineF::OnUserUpdateEvent& e) override;
 
         void onMouseMove(EngineF::OnMouseMoveEvent& e);
