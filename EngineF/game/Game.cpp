@@ -66,6 +66,9 @@ void Game::update(){
 
         while(m_DeltaTime >= 1.0){
 
+            EngineF::OnUpdateEvent onUpdate;
+            EngineF::EventManager::getInstance().dispatchEvent(onUpdate);
+
             EngineF::OnUserUpdateEvent onUserUpdate;
             EngineF::EventManager::getInstance().dispatchEvent(onUserUpdate);
 

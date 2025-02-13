@@ -14,13 +14,18 @@
 
 #include "../events/GameObjectEvents.h"
 
+#include "../components/Component.h"
+
 namespace EngineF{
+    class Component;
+
     class GameObject{
         protected:
             std::shared_ptr<Texture> m_Texture;
             glm::vec2 m_Position;
             glm::vec2 m_Size;
             glm::vec3 m_Color;
+
 
             bool m_IsActive;
             bool m_IsAlive;
@@ -31,13 +36,15 @@ namespace EngineF{
             GameObject* m_Parent;
             std::vector<GameObject*> m_Childrens;
 
+            std::vector<std::unique_ptr<Component>> m_Components;
+
             ListenerID m_OnDrawID;
             ListenerID m_OnUserUpdateID;
-            
+            ListenerID m_OnUpdateID;
 
-            void Init();
-            void Draw(OnDrawEvent& e);
-            void Update();
+            void init();
+            void draw(OnDrawEvent& e);
+            void update(OnUpdateEvent& e);
         public:
             GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
             ~GameObject();
@@ -58,6 +65,12 @@ namespace EngineF{
             void addChild(GameObject* child);
 
             void removeAllChildren();
+
+            template<typename ComponentType>
+            void addComponent(){
+                m_Components.push_back(std::unique_ptr<ComponentType>(new ComponentType(this)));
+            }
+
 
             void setPositionX(float x);
             float getPositionX();

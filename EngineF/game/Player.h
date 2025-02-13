@@ -2,6 +2,8 @@
 
 #include "../scene/GameObject.h"
 
+#include "../components/CollisionComponent.h"
+
 class Player : public EngineF::GameObject{
     private:
         int m_Dir = 1;

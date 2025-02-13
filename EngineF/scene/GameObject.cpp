@@ -9,7 +9,11 @@ namespace EngineF{
         EventManager::getInstance().dispatchEvent(gameObjectCreatedEvent);
 
         m_OnDrawID = EventManager::getInstance().addListener<OnDrawEvent>([this](OnDrawEvent& e){
-            this->Draw(e);
+            this->draw(e);
+        });
+
+        m_OnUpdateID = EventManager::getInstance().addListener<OnUpdateEvent>([this](OnUpdateEvent& e){
+            this->update(e);
         });
 
         m_OnUserUpdateID = EventManager::getInstance().addListener<OnUserUpdateEvent>([this](OnUserUpdateEvent& e){
@@ -18,6 +22,7 @@ namespace EngineF{
     }
 
     GameObject::~GameObject(){
+        m_Components.clear();
         removeAllChildren();
         EventManager::getInstance().removeListener<OnDrawEvent>(m_OnDrawID);
         EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUserUpdateID);
@@ -25,10 +30,16 @@ namespace EngineF{
     }
 
 
-    void GameObject::Draw(OnDrawEvent& e){
+    void GameObject::draw(OnDrawEvent& e){
         if(!m_IsVisible) 
             return;
         e.spriteRenderer->drawSprite(*m_Texture, m_Position, m_Size, m_Color);
+    }
+
+    void GameObject::update(OnUpdateEvent& e){
+        for(auto& component : m_Components){
+            component->update();
+        }
     }
 
     void GameObject::setParent(GameObject* parent){
@@ -47,6 +58,9 @@ namespace EngineF{
         }
         m_Childrens.clear();
     }
+
+
+    
 
 
     std::shared_ptr<Texture> GameObject::getTexture(){

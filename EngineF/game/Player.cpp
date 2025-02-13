@@ -5,6 +5,7 @@ Player::Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, gl
         m_OnMouseMoveID = EngineF::EventManager::getInstance().addListener<EngineF::OnMouseMoveEvent>([this](EngineF::OnMouseMoveEvent& e){
             this->onMouseMove(e);
         });
+        addComponent<EngineF::CollisionComponent>();
     }
 
 void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
