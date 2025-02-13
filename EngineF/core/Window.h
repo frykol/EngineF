@@ -9,14 +9,12 @@
 #include "../Logger.h"
 
 #include "../events/EventManager.h"
-#include "../events/KeyPressEvent.h"
+#include "../events/GameObjectEvents.h"
 
 namespace EngineF{
     class Window{
         private:
             GLFWwindow* m_Window;
-            float m_Width;
-            float m_Height;
 
             bool m_Init = false;
 

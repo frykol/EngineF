@@ -25,7 +25,6 @@ namespace EngineF{
 
         public:
             static void clear(glm::vec3 color = glm::vec3(0.0f,0.0f,0.0f));
-            static void swapBuffers(GLFWwindow* window);
             void drawSprite(Texture& texture ,glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             void drawSpriteNoTexture(glm::vec2 position, glm::vec2 size, glm::vec3 color);

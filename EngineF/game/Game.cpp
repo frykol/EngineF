@@ -2,19 +2,16 @@
 
 
 Game::Game(int width, int height): m_Width(width), m_Height(height), m_DeltaTime(0), m_CurrentFrame(0), m_LastFrame(0){
-
-    
-
     m_KeyID = EngineF::EventManager::getInstance().addListener<EngineF::KeyPressEvent>([this](EngineF::KeyPressEvent& e){
         this->handleInput(e);
     });
 
-    
+    EngineF::Window::getInstance().init(1280, 720);
 }
 
 
 void Game::init(){
-    EngineF::Window::getInstance().init(1280, 720);
+    
     m_LastFrame = glfwGetTime();
 
     std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("../../EngineF/shaders/basic.vertex","../../EngineF/shaders/basic.fragment", "basic");
@@ -42,18 +39,14 @@ void Game::update(){
     EngineF::GameObject* testPlayer = new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
     glm::vec2(300.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
-    float dir = 1;
-    int size = m_CurrentScene->getGameObjects().size();
-    EngineF::LOG(size, EngineF::LogType::MESSAGE);
 
-
-    EngineF::GameObject* test = new
-    EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
+    EngineF::GameObject* test = 
+    new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f));
 
 
-    EngineF::GameObject* testTwo = new
-    EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
+    EngineF::GameObject* testTwo =
+    new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
     glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
 
     testPlayer->addChild(test);

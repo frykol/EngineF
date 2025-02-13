@@ -14,8 +14,7 @@
 
 
 #include "../events/EventManager.h"
-#include "../events/KeyPressEvent.h"
-#include "../events/OnDrawEvent.h"
+#include "../events/GameObjectEvents.h"
 
 #include "../scene/GameObject.h"
 #include "../scene/Scene.h"

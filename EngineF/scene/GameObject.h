@@ -12,8 +12,7 @@
 #include "../events/EventManager.h"
 #include "../events/GameObjectCreatedEvent.h"
 
-#include "../events/OnDrawEvent.h"
-#include "../events/OnUserUpdateEvent.h"
+#include "../events/GameObjectEvents.h"
 
 namespace EngineF{
     class GameObject{

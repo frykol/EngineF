@@ -83,10 +83,6 @@ namespace EngineF
         glClearColor(color.x, color.y, color.z, 1.0f);
     }
 
-    void SpriteRenderer::swapBuffers(GLFWwindow* window){
-        glfwSwapBuffers(window);
-    }
-
 
     
 

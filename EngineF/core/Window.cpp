@@ -24,6 +24,11 @@ namespace EngineF{
         EventManager::getInstance().dispatchEvent(keyPressEvent);
     });
 
+    glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos){
+        OnMouseMoveEvent onMouseMoveEvent(xpos, ypos);
+        EventManager::getInstance().dispatchEvent(onMouseMoveEvent);
+    });
+
     GLLOG([]{glewInit();});
 
 
