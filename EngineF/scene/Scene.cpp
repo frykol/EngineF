@@ -29,7 +29,7 @@ namespace EngineF{
     void Scene::addGameObjectTest(GameObjectCreatedEvent& e){
         GameObject* g = e.gameObject;
         //std::unique_ptr<GameObject> gameObject(std::move(g));
-        m_GameObjects.push_back(std::move(std::unique_ptr<GameObject>(g)));
+        m_GameObjects.push_back(std::move(std::shared_ptr<GameObject>(g)));
         LOG("Added", LogType::MESSAGE);
     }
 
@@ -54,26 +54,36 @@ namespace EngineF{
         return m_Camera;
     }
 
-    std::vector<std::unique_ptr<GameObject>>& Scene::getGameObjects(){
-        if(!m_IsConstructed){
-            std::string message = "Scene: " + m_Name + " is not constructed";
-            LOG_E(message, LogType::ERROR, true);
-        }
-        return m_GameObjects;
-    }
 
-    GameObject* Scene::getGameObject(int index){
+    std::weak_ptr<GameObject> Scene::getGameObject(int index){
         if(!m_IsConstructed){
             std::string message = "Scene: " + m_Name + " is not constructed";
             LOG_E(message, LogType::ERROR, true);
-            return nullptr;
+            return std::weak_ptr<GameObject>();
         }
         if(index >= m_GameObjects.size() || index < 0){
             std::string message = "Index out of range in: " + m_Name;
             LOG_E(message, LogType::ERROR, true);
-            return nullptr;
+            return std::weak_ptr<GameObject>();
         }
-        return m_GameObjects[index].get();
+        return std::weak_ptr(m_GameObjects[index]);
+    }
+
+    std::weak_ptr<GameObject> Scene::getGameObjectByName(const std::string& name){
+        if(!m_IsConstructed){
+            std::string message = "Scene: " + m_Name + " is not constructed";
+            LOG_E(message, LogType::ERROR, true);
+            return std::weak_ptr<GameObject>();
+        }
+
+        for(int i = 0; i<m_GameObjects.size(); i++){
+            if(m_GameObjects[i]->getName() == name){
+                return std::weak_ptr(m_GameObjects[i]);
+            }
+        }
+        std::string msg = "GameObject " + name + " not found"; 
+        LOG(msg, LogType::WARNING);
+        return std::weak_ptr<GameObject>();
     }
 
     void Scene::destroyNotAliveGameObjects(){

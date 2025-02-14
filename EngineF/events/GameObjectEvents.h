@@ -12,10 +12,13 @@ namespace EngineF{
 
             const std::string GetEventType() const override {return "OnUpdateEvent";}
     };
+    class Scene;
 
     class OnUserInitEvent : public Event{
         public:
-            OnUserInitEvent() {};
+            Scene* scene;
+
+            OnUserInitEvent(Scene* scn): scene(scn){};
 
             const std::string GetEventType() const override {return "OnUserInitEvent";}
     };
@@ -38,6 +41,8 @@ namespace EngineF{
             const std::string GetEventType() const override {return "KeyPressEvent";}
     };
 
+    
+
     class OnDrawEvent : public Event{
         public:
             SpriteRenderer* spriteRenderer;
@@ -47,4 +52,5 @@ namespace EngineF{
             const std::string GetEventType() const override {return "OnDrawEvent";}
     };
 
+    
 }

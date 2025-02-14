@@ -19,6 +19,7 @@
 #include "../scene/GameObject.h"
 #include "../scene/Scene.h"
 #include "Player.h"
+#include "Ball.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

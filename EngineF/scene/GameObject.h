@@ -5,20 +5,21 @@
 
 #include "../core/SpriteRenderer.h"
 #include "../core/Texture.h"
+#include "../core/Input.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "../events/EventManager.h"
+#include "../events/GameObjectEvents.h"
 #include "../events/GameObjectCreatedEvent.h"
 
-#include "../events/GameObjectEvents.h"
 
 #include "../components/Component.h"
+#include "Scene.h"
 
 namespace EngineF{
     class Component;
-
     class GameObject{
         protected:
             std::shared_ptr<Texture> m_Texture;

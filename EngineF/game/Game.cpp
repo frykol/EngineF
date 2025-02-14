@@ -37,23 +37,10 @@ void Game::init(){
     new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
     glm::vec2(200.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
+    new Ball(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(500.0f, 500.0f),
+    glm::vec2(50.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
-    EngineF::GameObject* test = 
-    new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(300.0f, 300.0f),
-    glm::vec2(200.0f,300.0f), glm::vec3(1.0f, 0.0f,0.0f), "abcTest");
-
-    test->addComponent<EngineF::CollisionComponent>();
-
-    EngineF::GameObject* testTwo =
-    new EngineF::GameObject(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(600.0f, 300.0f),
-    glm::vec2(200.0f,300.0f), glm::vec3(0.0f, 0.0f,1.0f));
-
-    testTwo->addComponent<EngineF::CollisionComponent>();
-
-
-    test->addChild(testTwo);
-
-    EngineF::OnUserInitEvent onUserInitEvent;
+    EngineF::OnUserInitEvent onUserInitEvent(m_CurrentScene);
     EngineF::EventManager::getInstance().dispatchEvent(onUserInitEvent);
 
     update();
@@ -97,15 +84,11 @@ void Game::handleInput(){
 
     if (EngineF::Input::getInstance().isKeyPressedOnce(GLFW_KEY_E)){
         EngineF::LOG("yeet", EngineF::LogType::MESSAGE);
-        EngineF::GameObject* gameObject = m_CurrentScene->getGameObject(0);
-        if(gameObject != nullptr){
-            gameObject->setIsAlive(false);
+        std::weak_ptr<EngineF::GameObject> gameObject = m_CurrentScene->getGameObject(0);
+        if(std::shared_ptr<EngineF::GameObject> g = gameObject.lock()){
+            g->setIsAlive(false);
         }
     }
-    // if (EngineF::Input::getInstance().isKeyPressed(GLFW_KEY_W)){
-    //     std::string size = std::to_string(m_CurrentScene->getGameObjects().size());
-    //     EngineF::LOG(size, EngineF::LogType::MESSAGE);
-    // }
 }
 
 void Game::calculateDeltaTime(){

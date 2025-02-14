@@ -17,6 +17,8 @@
 #include "../components/CollisionComponent.h"
 
 namespace EngineF{
+    
+
     class Scene{
         private:
             std::string m_Name;
@@ -24,7 +26,7 @@ namespace EngineF{
             glm::mat4 m_Camera;
 
             
-            std::vector<std::unique_ptr<GameObject>> m_GameObjects;
+            std::vector<std::shared_ptr<GameObject>> m_GameObjects;
 
             bool m_IsConstructed;
 
@@ -50,9 +52,9 @@ namespace EngineF{
 
             void removeGameObject(int index);
 
-            std::vector<std::unique_ptr<GameObject>>& getGameObjects();
+            std::weak_ptr<GameObject> getGameObject(int index);
 
-            GameObject* getGameObject(int index);
+            std::weak_ptr<GameObject> getGameObjectByName(const std::string& name);
 
 
             void destroyNotAliveGameObjects();
