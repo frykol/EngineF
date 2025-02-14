@@ -49,6 +49,10 @@ namespace EngineF{
             int getWindowWidth();
             int getWindowHeight();
 
+            bool isInitialized();
+
+            GLFWwindow* getWindow();
+
             glm::mat4& getProjection();
     };
     

@@ -2,11 +2,9 @@
 
 
 Game::Game(int width, int height): m_DeltaTime(0), m_CurrentFrame(0), m_LastFrame(0){
-    m_KeyID = EngineF::EventManager::getInstance().addListener<EngineF::KeyPressEvent>([this](EngineF::KeyPressEvent& e){
-        this->handleInput(e);
-    });
 
     EngineF::Window::getInstance().init(1280, 720);
+    EngineF::Input::getInstance().init();
 }
 
 
@@ -37,7 +35,7 @@ void Game::init(){
     m_CurrentScene->testScene();
 
     new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
-    glm::vec2(50.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
+    glm::vec2(200.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
 
     EngineF::GameObject* test = 
@@ -86,7 +84,7 @@ void Game::update(){
         }
 
 
-
+        handleInput();
         EngineF::Window::getInstance().swapBuffers();
         glfwPollEvents();
 
@@ -95,18 +93,19 @@ void Game::update(){
 }
 
 
-void Game::handleInput(EngineF::KeyPressEvent& e){
-    if (e.keyCode == GLFW_KEY_E && e.action == GLFW_PRESS){
+void Game::handleInput(){
+
+    if (EngineF::Input::getInstance().isKeyPressedOnce(GLFW_KEY_E)){
         EngineF::LOG("yeet", EngineF::LogType::MESSAGE);
         EngineF::GameObject* gameObject = m_CurrentScene->getGameObject(0);
         if(gameObject != nullptr){
             gameObject->setIsAlive(false);
         }
     }
-    if (e.keyCode == GLFW_KEY_W && e.action == GLFW_PRESS){
-        std::string size = std::to_string(m_CurrentScene->getGameObjects().size());
-        EngineF::LOG(size, EngineF::LogType::MESSAGE);
-    }
+    // if (EngineF::Input::getInstance().isKeyPressed(GLFW_KEY_W)){
+    //     std::string size = std::to_string(m_CurrentScene->getGameObjects().size());
+    //     EngineF::LOG(size, EngineF::LogType::MESSAGE);
+    // }
 }
 
 void Game::calculateDeltaTime(){

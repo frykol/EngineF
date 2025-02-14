@@ -24,11 +24,10 @@ namespace EngineF{
             this->onWindowResize(e);
         });
 
-        LOG("OOO", LogType::MESSAGE);
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
-            KeyPressEvent keyPressEvent(key, action);
-            EventManager::getInstance().dispatchEvent(keyPressEvent);
-        });
+        // glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
+        //     KeyPressEvent keyPressEvent(key, action);
+        //     EventManager::getInstance().dispatchEvent(keyPressEvent);
+        // });
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos){
             OnMouseMoveEvent onMouseMoveEvent(xpos, ypos);
@@ -58,6 +57,10 @@ namespace EngineF{
         return !glfwWindowShouldClose(m_Window);
     }
 
+    bool Window::isInitialized(){
+        return m_Init;
+    }
+
     void Window::swapBuffers(){
         glfwSwapBuffers(m_Window);
     }
@@ -71,6 +74,14 @@ namespace EngineF{
     }
     glm::mat4& Window::getProjection(){
         return m_Projection;
+    }
+
+    GLFWwindow* Window::getWindow(){
+        if(!m_Init){
+            LOG_E("Window is not initialized", LogType::ERROR, true);
+            return nullptr;
+        }
+        return m_Window;
     }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../scene/GameObject.h"
+#include "../core/Input.h"
 
 #include "../components/CollisionComponent.h"
 
@@ -9,6 +10,7 @@ class Player : public EngineF::GameObject{
         int m_Dir = 1;
 
         EngineF::ListenerID m_OnMouseMoveID;
+
     public:
         Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
         ~Player();
@@ -17,6 +19,5 @@ class Player : public EngineF::GameObject{
         void userUpdate(EngineF::OnUserUpdateEvent& e) override;
 
         void onMouseMove(EngineF::OnMouseMoveEvent& e);
-
         void onCollision(EngineF::GameObject* collision) override;
 };

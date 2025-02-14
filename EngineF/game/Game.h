@@ -11,7 +11,7 @@
 #include "../core/Texture.h"
 #include "../core/SpriteRenderer.h"
 #include "../core/ResourceManager.h"
-
+#include "../core/Input.h"
 
 #include "../events/EventManager.h"
 #include "../events/GameObjectEvents.h"
@@ -30,7 +30,6 @@ class Game{
         std::shared_ptr<EngineF::SpriteRenderer> m_Renderer;
         EngineF::Scene* m_CurrentScene;
 
-        EngineF::ListenerID m_KeyID;
 
 
         float m_CurrentFrame;
@@ -48,5 +47,5 @@ class Game{
         Game(int width, int height);
         void init();
 
-        void handleInput(EngineF::KeyPressEvent& e);
+        void handleInput();
 };
