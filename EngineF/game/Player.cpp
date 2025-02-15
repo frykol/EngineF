@@ -29,7 +29,7 @@ void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
 }
 
 
-void Player::onCollision(EngineF::GameObject* collision){
+void Player::onCollision(EngineF::CollisionComponent* collision){
     EngineF::LOG("COLLISION", EngineF::LogType::MESSAGE);
     //collision->setIsAlive(false);
 }

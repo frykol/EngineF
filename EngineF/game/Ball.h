@@ -13,5 +13,5 @@ class Ball : public EngineF::GameObject{
         void userInit(EngineF::OnUserInitEvent& e) override;
         void userUpdate(EngineF::OnUserUpdateEvent& e) override;
 
-        void onCollision(GameObject* collision) override;
+        void onCollision(EngineF::CollisionComponent* collision) override;
 };

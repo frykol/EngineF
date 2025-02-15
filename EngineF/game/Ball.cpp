@@ -40,7 +40,7 @@ void Ball::userUpdate(EngineF::OnUserUpdateEvent& e){
     
 }
 
-void Ball::onCollision(GameObject* collision){
+void Ball::onCollision(EngineF::CollisionComponent* collision){
 
     EngineF::LOG("Collision", EngineF::LogType::MESSAGE);
 

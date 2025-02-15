@@ -16,10 +16,12 @@
 
 
 #include "../components/Component.h"
+#include "../components/CollisionComponent.h"
 #include "Scene.h"
 
 namespace EngineF{
     class Component;
+    class CollisionComponent;
     class GameObject{
         protected:
             std::shared_ptr<Texture> m_Texture;
@@ -63,7 +65,7 @@ namespace EngineF{
             virtual void userInit(OnUserInitEvent& e) {};
             virtual void userUpdate(OnUserUpdateEvent& e) {};
 
-            virtual void onCollision(GameObject* collision) {};
+            virtual void onCollision(CollisionComponent* collision) {};
 
             void setParent(GameObject* parent);
             void addChild(GameObject* child);
@@ -71,8 +73,7 @@ namespace EngineF{
 
             template<typename ComponentType, typename... Args>
             void addComponent(Args... args){
-                std::unique_ptr<ComponentType> g = std::make_unique<ComponentType>(this, args...);
-                m_Components.push_back(std::move(g));
+                m_Components.emplace_back(std::make_unique<ComponentType>(this, args...));
             }
 
 
