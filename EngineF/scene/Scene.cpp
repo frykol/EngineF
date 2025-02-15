@@ -14,7 +14,7 @@ namespace EngineF{
             
         for(float i = 0; i<maxLen; i++){
             new GameObject(ResourceManager::getInstance().getTexture("brick"), glm::vec2(0 + i * (1280.0f/maxLen), 0),
-            glm::vec2(1280.0f/maxLen,100.0f), glm::vec3(0.4f,1.0f,0.4f));
+            glm::vec2(1280.0f/maxLen,100.0f), glm::vec3(1.0f,0.1f + i/8.0f,0.1f + i/10.0f));
         }
         m_IsConstructed = true;
     }

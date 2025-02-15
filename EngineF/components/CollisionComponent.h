@@ -20,8 +20,11 @@ namespace EngineF{
             CollisionComponent::CollisionType m_CollisionType;
 
             glm::vec2 m_Boundary;
+
+            glm::vec2 m_Difference;
         public:
-            CollisionComponent(GameObject* gameObject, CollisionComponent::CollisionType collisionType = CollisionComponent::CollisionType::Box,const glm::vec2& boundary = glm::vec2(50.0f, 50.0f));
+            CollisionComponent(GameObject* gameObject,CollisionComponent::CollisionType collisionType,const glm::vec2& boundary);
+            CollisionComponent(GameObject* gameObject,CollisionComponent::CollisionType collisionType, float radius);
             ~CollisionComponent();
 
             void update() override;
@@ -29,5 +32,7 @@ namespace EngineF{
 
             glm::vec2& getBoundary();
             GameObject* getOwner();
+            glm::vec2& getDiffrence();
+            CollisionComponent::CollisionType getCollisionType();
     };
 }

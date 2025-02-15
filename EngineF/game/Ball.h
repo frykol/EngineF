@@ -7,6 +7,7 @@ class Ball : public EngineF::GameObject{
     private:
         std::weak_ptr<GameObject> m_Player;
         glm::vec2 m_Velocity;
+        glm::vec2 m_InitialVelocity;
         bool isGameStarted = false;
     public:
         Ball(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "BallTest");

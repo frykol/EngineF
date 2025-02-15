@@ -41,7 +41,8 @@ void Game::init(){
     size_t size = m_CurrentScene->getGameObjectsCount();
 
     for(size_t i = 0; i<size; i++){
-        m_CurrentScene->getGameObject(i).lock()->addComponent<EngineF::CollisionComponent>();
+        std::shared_ptr<EngineF::GameObject> gameObject = m_CurrentScene->getGameObject(i).lock();
+        gameObject->addComponent<EngineF::CollisionComponent>(EngineF::CollisionComponent::CollisionType::Box, gameObject->getSize());
     }
 
     new Ball(EngineF::ResourceManager::getInstance().getTexture("ball"), glm::vec2(500.0f, 500.0f),
