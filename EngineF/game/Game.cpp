@@ -16,6 +16,7 @@ void Game::init(){
 
     std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("shaders/basic.vertex","shaders/basic.fragment", "basic");
     EngineF::ResourceManager::getInstance().loadTexture("textures/brick.jpg", "brick");
+    EngineF::ResourceManager::getInstance().loadTexture("textures/ball.png", "ball");
 
 
     int width = EngineF::Window::getInstance().getWindowWidth(); 
@@ -37,11 +38,21 @@ void Game::init(){
     new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
     glm::vec2(200.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
 
-    new Ball(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(500.0f, 500.0f),
-    glm::vec2(50.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
+    size_t size = m_CurrentScene->getGameObjectsCount();
+
+    for(size_t i = 0; i<size; i++){
+        m_CurrentScene->getGameObject(i).lock()->addComponent<EngineF::CollisionComponent>();
+    }
+
+    new Ball(EngineF::ResourceManager::getInstance().getTexture("ball"), glm::vec2(500.0f, 500.0f),
+    glm::vec2(50.0f, 50.0f), glm::vec3(1.0f,1.0f,1.0f));
 
     EngineF::OnUserInitEvent onUserInitEvent(m_CurrentScene);
     EngineF::EventManager::getInstance().dispatchEvent(onUserInitEvent);
+
+    
+
+    
 
     update();
 }

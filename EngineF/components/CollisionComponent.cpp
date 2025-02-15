@@ -3,7 +3,7 @@
 namespace EngineF{
     std::vector<GameObject*> CollisionComponent::m_CollisionGameObjects;
 
-    CollisionComponent::CollisionComponent(GameObject* gameObject): Component(gameObject){
+    CollisionComponent::CollisionComponent(GameObject* gameObject, CollisionComponent::CollisionType collisionType): Component(gameObject), m_CollisionType(collisionType){
         m_CollisionGameObjects.push_back(gameObject);
     }
 

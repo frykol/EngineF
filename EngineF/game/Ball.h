@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../scene/GameObject.h"
+#include "../components/CollisionComponent.h"
 
 class Ball : public EngineF::GameObject{
     private:
@@ -11,4 +12,6 @@ class Ball : public EngineF::GameObject{
         Ball(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "BallTest");
         void userInit(EngineF::OnUserInitEvent& e) override;
         void userUpdate(EngineF::OnUserUpdateEvent& e) override;
+
+        void onCollision(GameObject* collision) override;
 };

@@ -70,9 +70,10 @@ namespace EngineF
         m_Shader.setUniform3f("u_Color", color.x,color.y,color.z);
 
         
-        glActiveTexture(GL_TEXTURE0);
+        //glActiveTexture(GL_TEXTURE0);
         texture.bind();
-
+        m_Shader.setUniform1i("u_Texture", 0);
+        
         GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
         GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});
         GLLOG([]{glBindVertexArray(0);});

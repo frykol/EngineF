@@ -80,7 +80,10 @@ namespace EngineF{
         glUseProgram(0);
     }
 
-
+    void Shader::setUniform1i(const char* uniformName, int value){
+        bind();
+        glUniform1i(glGetUniformLocation(m_ID, uniformName), value);
+    }
 
     void Shader::setUniform3f(const char* uniformName, float f1, float f2, float f3){
         bind();

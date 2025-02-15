@@ -33,6 +33,7 @@ namespace EngineF{
             const char* getName(){return m_Name; }
             void setName(const char* name) {m_Name = name; }
 
+            void setUniform1i(const char* uniformName, int value);
             void setUniform3f(const char* uniformName, float f1, float f2, float f3);
             void setUniformMat4(const char* uniformName, glm::mat4& matrix);
     };

@@ -94,4 +94,8 @@ namespace EngineF{
         }
     }
 
+    size_t Scene::getGameObjectsCount(){
+        return m_GameObjects.size();
+    }
+
 }

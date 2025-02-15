@@ -69,9 +69,9 @@ namespace EngineF{
             void addChild(GameObject* child);
             void removeAllChildren();
 
-            template<typename ComponentType>
-            void addComponent(){
-                std::unique_ptr<ComponentType> g = std::make_unique<ComponentType>(this);
+            template<typename ComponentType, typename... Args>
+            void addComponent(Args... args){
+                std::unique_ptr<ComponentType> g = std::make_unique<ComponentType>(this, args...);
                 m_Components.push_back(std::move(g));
             }
 

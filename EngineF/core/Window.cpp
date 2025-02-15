@@ -5,20 +5,33 @@ namespace EngineF{
         if(m_Init)
             LOG("Window Already Initialized", LogType::WARNING);
 
-        if (!glfwInit())
+        if (!glfwInit()){
             exit(-1);
-
+        }
         m_Width = width;
         m_Height = height;
+        
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        
         m_Window = glfwCreateWindow(width, height, "Engine F", NULL, NULL);
 
         if (!m_Window)
             {
+                LOG("ERROR", LogType::ERROR);
                 glfwTerminate();
                 exit(-1);
             }
 
+        
+
+        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         glfwMakeContextCurrent(m_Window);
+
 
         m_OnWindowResizeID = EventManager::getInstance().addListener<OnWindowResizeEvent>([this](OnWindowResizeEvent& e){
             this->onWindowResize(e);
@@ -41,7 +54,7 @@ namespace EngineF{
 
         glfwSwapInterval(1);
 
-        GLLOG([]{glewInit();});
+        glewInit();
         m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f, -1.0f,1.0f);
 
         m_Init = true;

@@ -10,7 +10,6 @@ Player::~Player(){
 
 
 void Player::userInit(EngineF::OnUserInitEvent& e){
-    addComponent<EngineF::CollisionComponent>();
 }
 
 void Player::userUpdate(EngineF::OnUserUpdateEvent& e){

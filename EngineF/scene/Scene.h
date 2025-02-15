@@ -56,6 +56,7 @@ namespace EngineF{
 
             std::weak_ptr<GameObject> getGameObjectByName(const std::string& name);
 
+            size_t getGameObjectsCount();
 
             void destroyNotAliveGameObjects();
     };
