@@ -14,8 +14,8 @@ void Game::init(){
 
     
 
-    std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("../../EngineF/shaders/basic.vertex","../../EngineF/shaders/basic.fragment", "basic");
-    EngineF::ResourceManager::getInstance().loadTexture("../../EngineF/textures/brick.jpg", "brick");
+    std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("shaders/basic.vertex","shaders/basic.fragment", "basic");
+    EngineF::ResourceManager::getInstance().loadTexture("textures/brick.jpg", "brick");
 
 
     int width = EngineF::Window::getInstance().getWindowWidth(); 
@@ -57,8 +57,9 @@ void Game::update(){
         EngineF::OnDrawEvent onDrawEvent(m_Renderer.get());
         EngineF::EventManager::getInstance().dispatchEvent(onDrawEvent);
 
-
         while(m_DeltaTime >= 1.0){
+            
+    
 
             EngineF::OnUpdateEvent onUpdate;
             EngineF::EventManager::getInstance().dispatchEvent(onUpdate);

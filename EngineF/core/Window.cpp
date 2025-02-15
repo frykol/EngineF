@@ -39,6 +39,8 @@ namespace EngineF{
             EventManager::getInstance().dispatchEvent(onWindowResizeEvent);
         });
 
+        glfwSwapInterval(1);
+
         GLLOG([]{glewInit();});
         m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f, -1.0f,1.0f);
 
