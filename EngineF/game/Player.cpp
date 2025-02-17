@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name)
-    : GameObject(texture, position, size, color, name){
+Player::Player(glm::vec2 position, glm::vec2 size, std::string name)
+    : GameObject(position, size, name){
         
     }
 

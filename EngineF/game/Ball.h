@@ -10,7 +10,7 @@ class Ball : public EngineF::GameObject{
         glm::vec2 m_InitialVelocity;
         bool isGameStarted = false;
     public:
-        Ball(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "BallTest");
+        Ball(glm::vec2 position, glm::vec2 size, std::string name = "BallTest");
         void userInit(EngineF::OnUserInitEvent& e) override;
         void userUpdate(EngineF::OnUserUpdateEvent& e) override;
 

@@ -1,7 +1,7 @@
 #include "Ball.h"
 
-Ball::Ball(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name)
-    : GameObject(texture, position, size, color, name){
+Ball::Ball(glm::vec2 position, glm::vec2 size, std::string name)
+    : GameObject(position, size, name){
 }
 
 void Ball::userInit(EngineF::OnUserInitEvent& e){

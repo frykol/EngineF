@@ -17,12 +17,13 @@
 
 #include "../components/Component.h"
 #include "../components/CollisionComponent.h"
+#include "../components/SpriteComponent.h"
+
 #include "Scene.h"
 
 namespace EngineF{
     class GameObject{
         protected:
-            std::shared_ptr<Texture> m_Texture;
             glm::vec2 m_Position;
             glm::vec2 m_Size;
             glm::vec3 m_Color;
@@ -40,20 +41,16 @@ namespace EngineF{
 
             std::vector<std::unique_ptr<Component>> m_Components;
 
-            ListenerID m_OnDrawID;
             ListenerID m_OnUserInitID;
             ListenerID m_OnUserUpdateID;
             ListenerID m_OnUpdateID;
 
             void init();
-            void draw(OnDrawEvent& e);
             void update(OnUpdateEvent& e);
         public:
-            GameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "Test");
+            GameObject(glm::vec2 position, glm::vec2 size, std::string name = "Test");
             virtual ~GameObject();
 
-            void setTexture(std::shared_ptr<Texture> texture);
-            std::shared_ptr<Texture> getTexture();
 
             void setPosition(glm::vec2 position);
             glm::vec2 getPosition();
@@ -83,9 +80,6 @@ namespace EngineF{
 
             void setSize(glm::vec2 size);
             glm::vec2 getSize();
-
-            void setColor(glm::vec3 color);
-            glm::vec3 getColor();
 
             bool getIsAlive();
             void setIsAlive(bool isAlive);

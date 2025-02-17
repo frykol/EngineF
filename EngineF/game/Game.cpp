@@ -1,6 +1,23 @@
 #include "Game.h"
 
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "../Logger.h"
+
+#include "../core/ResourceManager.h"
+#include "../core/Input.h"
+
+#include "../events/EventManager.h"
+#include "../events/GameObjectEvents.h"
+#include "../events/DrawEvent.h"
+
+#include "../scene/GameObject.h"
+#include "../scene/Scene.h"
+#include "Player.h"
+#include "Ball.h"
+
 Game::Game(int width, int height): m_DeltaTime(0), m_CurrentFrame(0), m_LastFrame(0){
 
     EngineF::Window::getInstance().init(1280, 720);
@@ -35,23 +52,21 @@ void Game::init(){
     m_CurrentScene = &scene;
     m_CurrentScene->testScene();
 
-    new Player(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec2(700.0f, 650.0f),
-    glm::vec2(200.0f, 50.0f), glm::vec3(1.0f,0.2f,0.1f));
+    new Player(glm::vec2(700.0f, 650.0f),glm::vec2(200.0f, 50.0f));
 
     size_t size = m_CurrentScene->getGameObjectsCount();
 
     for(size_t i = 0; i<size; i++){
         std::shared_ptr<EngineF::GameObject> gameObject = m_CurrentScene->getGameObject(i).lock();
         gameObject->addComponent<EngineF::CollisionComponent>(EngineF::CollisionComponent::CollisionType::Box, gameObject->getSize());
+        gameObject->addComponent<EngineF::SpriteComponent>(EngineF::ResourceManager::getInstance().getTexture("brick"), glm::vec3(1.0f, 0.1f + i/9.0f, 0.1f + i/11.0f));
     }
 
-    new Ball(EngineF::ResourceManager::getInstance().getTexture("ball"), glm::vec2(500.0f, 500.0f),
-    glm::vec2(50.0f, 50.0f), glm::vec3(1.0f,1.0f,1.0f));
+    EngineF::GameObject* ball = new Ball(glm::vec2(500.0f, 500.0f), glm::vec2(50.0f, 50.0f));
+    ball->addComponent<EngineF::SpriteComponent>(EngineF::ResourceManager::getInstance().getTexture("ball"), glm::vec3(1.0f,1.0f,1.0f));
 
     EngineF::OnUserInitEvent onUserInitEvent(m_CurrentScene);
     EngineF::EventManager::getInstance().dispatchEvent(onUserInitEvent);
-
-    
 
     
 

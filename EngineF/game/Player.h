@@ -10,7 +10,7 @@ class Player : public EngineF::GameObject{
         int m_Dir = 1;
 
     public:
-        Player(std::shared_ptr<EngineF::Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color, std::string name = "PlayerTest");
+        Player(glm::vec2 position, glm::vec2 size, std::string name = "PlayerTest");
         ~Player();
 
         void userInit(EngineF::OnUserInitEvent& e) override;

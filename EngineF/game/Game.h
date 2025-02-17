@@ -10,22 +10,9 @@
 #include "../core/Shader.h"
 #include "../core/Texture.h"
 #include "../core/SpriteRenderer.h"
-#include "../core/ResourceManager.h"
-#include "../core/Input.h"
 
-#include "../events/EventManager.h"
-#include "../events/GameObjectEvents.h"
-#include "../events/DrawEvent.h"
 
-#include "../scene/GameObject.h"
-#include "../scene/Scene.h"
-#include "Player.h"
-#include "Ball.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
-#include "../Logger.h"
 
 class Game{
     private:

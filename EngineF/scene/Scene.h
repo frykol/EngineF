@@ -3,21 +3,20 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include "GameObject.h"
-#include "../core/ResourceManager.h"
+
 
 #include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+
 
 #include "../Logger.h"
 
 #include "../events/EventManager.h"
 #include "../events/GameObjectCreatedEvent.h"
 
-#include "../components/CollisionComponent.h"
+
 
 namespace EngineF{
-    
+    class GameObject;
 
     class Scene{
         private:
@@ -45,8 +44,6 @@ namespace EngineF{
 
             void setCamera(glm::mat4 camera);
             glm::mat4 getCamera();
-
-            GameObject* addGameObject(std::shared_ptr<Texture> texture, glm::vec2 position, glm::vec2 size, glm::vec3 color);
 
             void addGameObjectTest(GameObjectCreatedEvent& e);
 
