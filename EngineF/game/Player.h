@@ -3,7 +3,7 @@
 #include "../scene/GameObject.h"
 
 
-#include "../components/CollisionComponent.h"
+//#include "../components/CollisionComponent.h"
 
 class Player : public EngineF::GameObject{
     private:

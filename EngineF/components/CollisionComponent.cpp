@@ -1,4 +1,5 @@
 #include "CollisionComponent.h"
+#include "../scene/GameObject.h"
 
 namespace EngineF{
     std::vector<CollisionComponent*> CollisionComponent::m_Collisions;

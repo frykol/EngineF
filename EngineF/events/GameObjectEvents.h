@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-#include "../core/SpriteRenderer.h"
+
 
 namespace EngineF{
 
@@ -39,17 +39,6 @@ namespace EngineF{
             OnMouseMoveEvent(double x, double y) : mouseX(x), mouseY(y){};
 
             const std::string GetEventType() const override {return "KeyPressEvent";}
-    };
-
-    
-
-    class OnDrawEvent : public Event{
-        public:
-            SpriteRenderer* spriteRenderer;
-
-            OnDrawEvent(SpriteRenderer* renderer): spriteRenderer(renderer){};
-
-            const std::string GetEventType() const override {return "OnDrawEvent";}
     };
 
     

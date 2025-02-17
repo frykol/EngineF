@@ -13,15 +13,13 @@
 #include "../events/EventManager.h"
 #include "../events/GameObjectEvents.h"
 #include "../events/GameObjectCreatedEvent.h"
-
+#include "../events/DrawEvent.h"
 
 #include "../components/Component.h"
 #include "../components/CollisionComponent.h"
 #include "Scene.h"
 
 namespace EngineF{
-    class Component;
-    class CollisionComponent;
     class GameObject{
         protected:
             std::shared_ptr<Texture> m_Texture;

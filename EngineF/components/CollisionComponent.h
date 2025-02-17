@@ -5,9 +5,9 @@
 #include "../Logger.h"
 #include "Component.h"
 
+#include "glm/glm.hpp"
 
 namespace EngineF{
-
     class CollisionComponent : public Component{
         public:
             enum CollisionType{

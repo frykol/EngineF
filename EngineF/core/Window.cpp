@@ -15,7 +15,7 @@ namespace EngineF{
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         
-        m_Window = glfwCreateWindow(width, height, "Engine F", NULL, NULL);
+        m_Window = glfwCreateWindow(width, height, "Sneaking Mouse", NULL, NULL);
 
         if (!m_Window)
             {

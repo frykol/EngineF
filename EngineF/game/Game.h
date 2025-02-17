@@ -15,6 +15,7 @@
 
 #include "../events/EventManager.h"
 #include "../events/GameObjectEvents.h"
+#include "../events/DrawEvent.h"
 
 #include "../scene/GameObject.h"
 #include "../scene/Scene.h"
