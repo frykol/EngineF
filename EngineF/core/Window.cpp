@@ -1,6 +1,16 @@
 #include "Window.h"
 
+#include "Input.h"
+#include "ResourceManager.h"
+
+#include "../events/DrawEvent.h"
+
 namespace EngineF{ 
+    Window::~Window(){
+        delete m_Input;
+        delete m_SpriteRenerer;
+    }
+
     void Window::init(int width, int height){
         if(m_Init)
             LOG("Window Already Initialized", LogType::WARNING);
@@ -24,23 +34,14 @@ namespace EngineF{
                 exit(-1);
             }
 
-        
-
-        
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glfwMakeContextCurrent(m_Window);
 
-
         m_OnWindowResizeID = EventManager::getInstance().addListener<OnWindowResizeEvent>([this](OnWindowResizeEvent& e){
             this->onWindowResize(e);
         });
-
-        // glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
-        //     KeyPressEvent keyPressEvent(key, action);
-        //     EventManager::getInstance().dispatchEvent(keyPressEvent);
-        // });
 
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos){
             OnMouseMoveEvent onMouseMoveEvent(xpos, ypos);
@@ -57,7 +58,26 @@ namespace EngineF{
         glewInit();
         m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f, -1.0f,1.0f);
 
+        m_Input = new Input(this);
+        
+
+        std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("shaders/basic.vertex","shaders/basic.fragment", "basic");
+        m_SpriteRenerer = new SpriteRenderer(*shader);
+        glm::mat4 view = glm::mat4(1.0f);
+        shader->setUniformMat4("u_View", view);
+        shader->setUniformMat4("u_Projection",getProjection());
+    
+        shader->unBind();
         m_Init = true;
+        m_Input->init();
+    }
+
+    void Window::update(){
+        m_SpriteRenerer->clear(glm::vec3(0.3f, 0.3f, 0.3f));
+        EngineF::OnDrawEvent onDrawEvent(m_SpriteRenerer);
+        EngineF::EventManager::getInstance().dispatchEvent(onDrawEvent);
+        glfwPollEvents();
+        swapBuffers();
     }
 
 
@@ -98,6 +118,8 @@ namespace EngineF{
         }
         return m_Window;
     }
-}
 
-EngineF::Window* EngineF::Window::window = new Window;
+    Input& Window::getInput(){
+        return *m_Input;
+    }
+}

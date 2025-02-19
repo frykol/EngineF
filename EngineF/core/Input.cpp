@@ -1,9 +1,13 @@
 #include "Input.h"
 
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
+
+#include "Window.h"
 
 namespace EngineF{
     void Input::init(){
-        if(!Window::getInstance().isInitialized()){
+        if(!m_Window->isInitialized()){
             LOG_E("Window is not initialized", LogType::ERROR, true);
             return;
         }
@@ -12,7 +16,7 @@ namespace EngineF{
             this->setKey(e);
         });
 
-        glfwSetKeyCallback(Window::getInstance().getWindow(), [](GLFWwindow* window, int key, int scancode, int action, int mods){
+        glfwSetKeyCallback(m_Window->getWindow(), [](GLFWwindow* window, int key, int scancode, int action, int mods){
             KeyPressEvent keyPressEvent(key, action);
             EventManager::getInstance().dispatchEvent(keyPressEvent);
         });
@@ -42,5 +46,3 @@ namespace EngineF{
     }
 
 }
-
-EngineF::Input* EngineF::Input::m_Input = new Input;

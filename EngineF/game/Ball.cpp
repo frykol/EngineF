@@ -2,13 +2,14 @@
 
 Ball::Ball(glm::vec2 position, glm::vec2 size, std::string name)
     : GameObject(position, size, name){
+        
 }
 
 void Ball::userInit(EngineF::OnUserInitEvent& e){
     m_Player = e.scene->getGameObjectByName("PlayerTest");
     m_Velocity = glm::vec2(0.0f, 0.0f);
     m_InitialVelocity = glm::vec2(10.0f, -10.0f);
-
+    m_Input = &EngineF::Application::getInstance().getInput();
     addComponent<EngineF::CollisionComponent>(EngineF::CollisionComponent::CollisionType::Circle, m_Size.x/2);
 }
 
@@ -18,7 +19,7 @@ void Ball::userUpdate(EngineF::OnUserUpdateEvent& e){
         return;
     }
 
-    if(EngineF::Input::getInstance().isKeyPressedOnce(GLFW_KEY_SPACE)){
+    if(m_Input->isKeyPressedOnce(GLFW_KEY_SPACE)){
         isGameStarted = true;
         m_Velocity = m_InitialVelocity;
     }

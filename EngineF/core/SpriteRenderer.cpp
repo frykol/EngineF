@@ -57,7 +57,7 @@ namespace EngineF
     }
 
     void SpriteRenderer::drawSprite(Texture& texture,glm::vec2 position, glm::vec2 size, glm::vec3 color){
-
+        
         m_Shader.bind();
 
         glm::mat4 model = glm::mat4(1.0f);

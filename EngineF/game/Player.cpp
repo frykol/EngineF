@@ -10,6 +10,7 @@ Player::~Player(){
 
 
 void Player::userInit(EngineF::OnUserInitEvent& e){
+    m_Input = &EngineF::Application::getInstance().getInput();
 }
 
 void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
@@ -20,10 +21,10 @@ void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
     if(m_Position.x + m_Size.x >= 1280.0f){
         m_Position.x = 1280.0f - m_Size.x;
     }
-    if(EngineF::Input::getInstance().isKeyPressed(GLFW_KEY_D)){
+    if(m_Input->isKeyPressed(GLFW_KEY_D)){
         m_Position.x += 10.0f;
     }
-    else if(EngineF::Input::getInstance().isKeyPressed(GLFW_KEY_A)){
+    else if(m_Input->isKeyPressed(GLFW_KEY_A)){
         m_Position.x -= 10.0f;
     }
 }
