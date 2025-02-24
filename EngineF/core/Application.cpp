@@ -14,6 +14,7 @@ namespace EngineF{
         EngineF::OnUserInitEvent onUserInitEvent(m_Scene);
         EngineF::EventManager::getInstance().dispatchEvent(onUserInitEvent);
 
+
         while(m_Window->isRunning()){
             timer.update();
             m_Window->update();

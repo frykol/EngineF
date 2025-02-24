@@ -21,7 +21,7 @@ namespace EngineF{
         float maxLen = 10;
             
         for(float i = 0; i<maxLen; i++){
-            new GameObject(glm::vec2(0 + i * (1280.0f/maxLen), 0),
+            new GameObject(glm::vec2(0 + i * (1280.0f/maxLen), 720.0f - 100.0f),
             glm::vec2(1280.0f/maxLen,100.0f));
         }
         m_IsConstructed = true;

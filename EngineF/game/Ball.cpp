@@ -8,7 +8,7 @@ Ball::Ball(glm::vec2 position, glm::vec2 size, std::string name)
 void Ball::userInit(EngineF::OnUserInitEvent& e){
     m_Player = e.scene->getGameObjectByName("PlayerTest");
     m_Velocity = glm::vec2(0.0f, 0.0f);
-    m_InitialVelocity = glm::vec2(10.0f, -10.0f);
+    m_InitialVelocity = glm::vec2(10.0f, 10.0f);
     m_Input = &EngineF::Application::getInstance().getInput();
     addComponent<EngineF::CollisionComponent>(EngineF::CollisionComponent::CollisionType::Circle, m_Size.x/2);
 }
@@ -26,7 +26,7 @@ void Ball::userUpdate(EngineF::OnUserUpdateEvent& e){
     if(!isGameStarted){
         std::shared_ptr<GameObject> g = m_Player.lock();
         m_Position.x = g->getPositionX() + g->getSize().x/2 - m_Size.x/2;
-        m_Position.y = g->getPositionY() - g->getSize().y - 10.0f;
+        m_Position.y = g->getPositionY() + g->getSize().y + 10.0f;
     }
 
     if(m_Position.y + m_Size.y >= 720.0f || m_Position.y <= 0.0f){
@@ -92,7 +92,7 @@ void Ball::onCollision(EngineF::CollisionComponent* collision){
         float strength = 2.0f;
         glm::vec2 oldVelocity = m_Velocity;
         m_Velocity.x = m_InitialVelocity.x * percentage * strength;
-        m_Velocity.y = -1.0f * abs(m_Velocity.y);
+        m_Velocity.y = 1.0f * abs(m_Velocity.y);
         m_Velocity = glm::normalize(m_Velocity) * glm::length(oldVelocity);
     }
 }

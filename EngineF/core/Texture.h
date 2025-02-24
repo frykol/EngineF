@@ -5,6 +5,9 @@
 
 #include "../stb_image/stb_image.h"
 
+#include "ft2build.h"
+#include FT_FREETYPE_H
+
 #include "../Logger.h"
 
 namespace EngineF{
@@ -17,15 +20,13 @@ namespace EngineF{
             int m_Width;
             int m_Height;
             int m_NrChanels;
-
-            const char* m_TexturePath;
-
-            void createTexture();
+            
 
         public:
-            Texture(const char* texturePath);
-
-            void bind();
-            void unBind();
+            Texture();
+            void createTexture(const char* texturePath);
+            void createFontTexture(const FT_Face& face);
+            void bind() const;
+            void unBind() const;
     };
 }

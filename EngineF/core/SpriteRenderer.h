@@ -19,13 +19,9 @@ namespace EngineF{
             unsigned int m_QuadVAO;
             void initQuadVAO();
 
-            static float m_CurrentFrame;
-            static float m_DeltaTime;
-            static float m_LastFrame;
-
         public:
             static void clear(glm::vec3 color = glm::vec3(0.0f,0.0f,0.0f));
-            void drawSprite(Texture& texture ,glm::vec2 position, glm::vec2 size, glm::vec3 color);
+            void drawSprite(Texture& texture ,const glm::vec2& position,const glm::vec2& size,const glm::vec3& color);
 
             void drawSpriteNoTexture(glm::vec2 position, glm::vec2 size, glm::vec3 color);
 

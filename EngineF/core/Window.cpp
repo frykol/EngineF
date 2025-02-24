@@ -9,6 +9,7 @@ namespace EngineF{
     Window::~Window(){
         delete m_Input;
         delete m_SpriteRenerer;
+        delete m_FontRenderer;
     }
 
     void Window::init(int width, int height){
@@ -34,10 +35,12 @@ namespace EngineF{
                 exit(-1);
             }
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
 
         glfwMakeContextCurrent(m_Window);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         m_OnWindowResizeID = EventManager::getInstance().addListener<OnWindowResizeEvent>([this](OnWindowResizeEvent& e){
             this->onWindowResize(e);
@@ -56,7 +59,7 @@ namespace EngineF{
         glfwSwapInterval(1);
 
         glewInit();
-        m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),static_cast<float>(m_Height),0.0f, -1.0f,1.0f);
+        m_Projection = glm::ortho(0.0f,static_cast<float>(m_Width),0.0f,static_cast<float>(m_Height), -1.0f,1.0f);
 
         m_Input = new Input(this);
         
@@ -68,6 +71,13 @@ namespace EngineF{
         shader->setUniformMat4("u_Projection",getProjection());
     
         shader->unBind();
+
+        shader = EngineF::ResourceManager::getInstance().loadShader("shaders/font.vertex","shaders/font.fragment", "font");
+        m_FontRenderer = new FontRenderer(*shader);
+        shader->setUniformMat4("u_Projection", getProjection());
+
+        ResourceManager::getInstance().loadFont("fonts/Arial.ttf", "arial");
+
         m_Init = true;
         m_Input->init();
     }
@@ -76,6 +86,8 @@ namespace EngineF{
         m_SpriteRenerer->clear(glm::vec3(0.3f, 0.3f, 0.3f));
         EngineF::OnDrawEvent onDrawEvent(m_SpriteRenerer);
         EngineF::EventManager::getInstance().dispatchEvent(onDrawEvent);
+        m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, essa z", glm::vec2(0.0f,620.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
+        m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, 2", glm::vec2(0.0f,300.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
         glfwPollEvents();
         swapBuffers();
     }

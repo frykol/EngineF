@@ -24,12 +24,11 @@ void Game::init(){
     EngineF::ResourceManager::getInstance().loadTexture("textures/brick.jpg", "brick");
     EngineF::ResourceManager::getInstance().loadTexture("textures/ball.png", "ball");
 
-    
     glm::mat4 view = glm::mat4(1.0f);
 
     m_CurrentScene = EngineF::Application::getInstance().getCurrentScene();
 
-    new Player(glm::vec2(700.0f, 650.0f),glm::vec2(200.0f, 50.0f));
+    new Player(glm::vec2(700.0f, 20.0f),glm::vec2(200.0f, 50.0f));
 
     size_t size = m_CurrentScene->getGameObjectsCount();
 

@@ -6,6 +6,7 @@
 #include "GLFW/glfw3.h"
 
 #include "SpriteRenderer.h"
+#include "FontRenderer.h"
 
 #include "../Logger.h"
 
@@ -24,6 +25,7 @@ namespace EngineF{
             GLFWwindow* m_Window;
             Input* m_Input;
             SpriteRenderer* m_SpriteRenerer;
+            FontRenderer* m_FontRenderer;
 
             ListenerID m_OnWindowResizeID;
 
@@ -35,6 +37,8 @@ namespace EngineF{
             glm::mat4 m_Projection;
 
         public: 
+
+            
             Window() {};
             ~Window();
 

@@ -3,10 +3,6 @@
 namespace EngineF
 {
 
-    float SpriteRenderer::m_CurrentFrame;
-    float SpriteRenderer::m_DeltaTime;
-    float SpriteRenderer::m_LastFrame;
-
     SpriteRenderer::SpriteRenderer(Shader& shader): m_Shader(shader){
         initQuadVAO();
     }
@@ -56,7 +52,7 @@ namespace EngineF
         GLLOG([]{glBindVertexArray(0);});
     }
 
-    void SpriteRenderer::drawSprite(Texture& texture,glm::vec2 position, glm::vec2 size, glm::vec3 color){
+    void SpriteRenderer::drawSprite(Texture& texture,const glm::vec2& position,const glm::vec2& size,const glm::vec3& color){
         
         m_Shader.bind();
 
@@ -77,6 +73,7 @@ namespace EngineF
         GLLOG([this]{glBindVertexArray(this->m_QuadVAO);});
         GLLOG([]{glDrawArrays(GL_TRIANGLES, 0, 6);});
         GLLOG([]{glBindVertexArray(0);});
+        texture.unBind();
     }
 
     void SpriteRenderer::clear(glm::vec3 color){
