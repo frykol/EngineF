@@ -19,7 +19,7 @@ namespace EngineF{
             ListenerID m_OnDrawID;
         public:
             SpriteComponent(GameObject* gameObject, std::shared_ptr<Texture> texture,const glm::vec3& color = glm::vec3(1.0f, 0.0f, 0.0f));
-            ~SpriteComponent();
+            ~SpriteComponent() override;
 
             void init() override {};
             void update() override {};

@@ -64,7 +64,7 @@ namespace EngineF{
         m_Input = new Input(this);
         
 
-        std::shared_ptr<EngineF::Shader> shader = EngineF::ResourceManager::getInstance().loadShader("shaders/basic.vertex","shaders/basic.fragment", "basic");
+        std::shared_ptr<Shader> shader = ResourceManager::getInstance().loadShader("shaders/basic.vertex","shaders/basic.fragment", "basic");
         m_SpriteRenerer = new SpriteRenderer(*shader);
         glm::mat4 view = glm::mat4(1.0f);
         shader->setUniformMat4("u_View", view);
@@ -72,11 +72,11 @@ namespace EngineF{
     
         shader->unBind();
 
-        shader = EngineF::ResourceManager::getInstance().loadShader("shaders/font.vertex","shaders/font.fragment", "font");
+        shader = ResourceManager::getInstance().loadShader("shaders/font.vertex","shaders/font.fragment", "font");
         m_FontRenderer = new FontRenderer(*shader);
         shader->setUniformMat4("u_Projection", getProjection());
-
-        ResourceManager::getInstance().loadFont("fonts/Arial.ttf", "arial");
+        shader->unBind();
+        //ResourceManager::getInstance().loadFont("fonts/Arial.ttf", "arial");
 
         m_Init = true;
         m_Input->init();
@@ -84,16 +84,20 @@ namespace EngineF{
 
     void Window::update(){
         m_SpriteRenerer->clear(glm::vec3(0.3f, 0.3f, 0.3f));
-        EngineF::OnDrawEvent onDrawEvent(m_SpriteRenerer);
-        EngineF::EventManager::getInstance().dispatchEvent(onDrawEvent);
-        m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, essa z", glm::vec2(0.0f,620.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
-        m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, 2", glm::vec2(0.0f,300.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
+        OnDrawEvent onDrawEvent(m_SpriteRenerer);
+        EventManager::getInstance().dispatchEvent(onDrawEvent);
+
+        OnTextDrawEvent onTextDrawEvent(m_FontRenderer);
+        EventManager::getInstance().dispatchEvent(onTextDrawEvent);
+        //m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, essa z", glm::vec2(0.0f,620.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
+        //m_FontRenderer->drawText(*ResourceManager::getInstance().getFont("arial"), "Test, 2", glm::vec2(0.0f,300.0f), 1.0f, glm::vec3(1.0f,1.0f,1.0f));
         glfwPollEvents();
         swapBuffers();
     }
 
 
     void Window::onWindowResize(OnWindowResizeEvent& e){
+        LOG("RESIZE", LogType::MESSAGE);
         m_Width = e.width;
         m_Height = e.height;
         glViewport(0, 0, e.width, e.height);

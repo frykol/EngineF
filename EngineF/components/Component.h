@@ -10,7 +10,7 @@ namespace EngineF{
             GameObject* m_Owner;
         public:
             Component(GameObject* gameObject);
-            virtual ~Component() {};
+            virtual ~Component() = 0;
 
             virtual void init() {};
             virtual void update() {};

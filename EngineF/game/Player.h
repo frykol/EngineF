@@ -12,7 +12,7 @@ class Player : public EngineF::GameObject{
         ~Player();
 
         void userInit(EngineF::OnUserInitEvent& e) override;
-        void userUpdate(EngineF::OnUserUpdateEvent& e) override;
+        void userUpdate() override;
 
         void onCollision(EngineF::CollisionComponent* collision) override;
 };

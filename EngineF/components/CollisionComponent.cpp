@@ -18,6 +18,8 @@ namespace EngineF{
         
         for(int i = 0; i<m_Collisions.size(); i++){
             if(this == m_Collisions[i]){
+                int size = m_Collisions.size();
+                //LOG(size, LogType::WARNING);
                 LOG("Collision Destroyed", LogType::WARNING);
                 m_Collisions.erase(m_Collisions.begin() + i);
             }

@@ -23,6 +23,7 @@ void Game::init(){
     
     EngineF::ResourceManager::getInstance().loadTexture("textures/brick.jpg", "brick");
     EngineF::ResourceManager::getInstance().loadTexture("textures/ball.png", "ball");
+    EngineF::ResourceManager::getInstance().loadFont("fonts/Arial.ttf", "arial");
 
     glm::mat4 view = glm::mat4(1.0f);
 

@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include "../core/ResourceManager.h"
 
 Ball::Ball(glm::vec2 position, glm::vec2 size, std::string name)
     : GameObject(position, size, name){
@@ -11,9 +12,10 @@ void Ball::userInit(EngineF::OnUserInitEvent& e){
     m_InitialVelocity = glm::vec2(10.0f, 10.0f);
     m_Input = &EngineF::Application::getInstance().getInput();
     addComponent<EngineF::CollisionComponent>(EngineF::CollisionComponent::CollisionType::Circle, m_Size.x/2);
+    addComponent<EngineF::TextComponent>(EngineF::ResourceManager::getInstance().getFont("arial"),"adsc",glm::vec2(400.0f, 400.0f) ,1.0f, glm::vec3(1.0f,1.0f,1.0f));
 }
 
-void Ball::userUpdate(EngineF::OnUserUpdateEvent& e){
+void Ball::userUpdate(){
 
     if(!m_Player.lock()){
         return;
@@ -43,7 +45,6 @@ void Ball::userUpdate(EngineF::OnUserUpdateEvent& e){
 }
 
 void Ball::onCollision(EngineF::CollisionComponent* collision){
-
     glm::vec2 compass[] = {
         glm::vec2( 0.0f,  1.0f),
         glm::vec2( 1.0f,  0.0f),	
@@ -82,6 +83,7 @@ void Ball::onCollision(EngineF::CollisionComponent* collision){
                 m_Position.y += penetration;
             }
         }
+
         collision->getOwner()->setIsAlive(false);
     }   
     else{

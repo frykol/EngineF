@@ -20,11 +20,9 @@ namespace EngineF{
             m_Window->update();
             if(timer.getDeltaTime() >= 1.0f){
                 
-                EngineF::OnUpdateEvent onUpdate;
-                EngineF::EventManager::getInstance().dispatchEvent(onUpdate);
-
-                EngineF::OnUserUpdateEvent onUserUpdate;
-                EngineF::EventManager::getInstance().dispatchEvent(onUserUpdate);
+                // EngineF::OnUpdateEvent onUpdate;
+                // EngineF::EventManager::getInstance().dispatchEvent(onUpdate);
+                m_Scene->update();
 
                 m_Scene->destroyNotAliveGameObjects();
 

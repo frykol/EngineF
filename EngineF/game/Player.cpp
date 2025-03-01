@@ -13,7 +13,7 @@ void Player::userInit(EngineF::OnUserInitEvent& e){
     m_Input = &EngineF::Application::getInstance().getInput();
 }
 
-void Player::userUpdate(EngineF::OnUserUpdateEvent& e){
+void Player::userUpdate(){
     if(m_Position.x <= 0.0f){
         m_Position.x = 0.0f;
     }

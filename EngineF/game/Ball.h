@@ -16,7 +16,7 @@ class Ball : public EngineF::GameObject{
     public:
         Ball(glm::vec2 position, glm::vec2 size, std::string name = "BallTest");
         void userInit(EngineF::OnUserInitEvent& e) override;
-        void userUpdate(EngineF::OnUserUpdateEvent& e) override;
+        void userUpdate() override;
 
         void onCollision(EngineF::CollisionComponent* collision) override;
 };

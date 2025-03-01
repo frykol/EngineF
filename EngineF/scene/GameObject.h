@@ -18,6 +18,7 @@
 #include "../components/Component.h"
 #include "../components/CollisionComponent.h"
 #include "../components/SpriteComponent.h"
+#include "../components/TextComponent.h"
 
 #include "Scene.h"
 
@@ -46,7 +47,8 @@ namespace EngineF{
             ListenerID m_OnUpdateID;
 
             void init();
-            void update(OnUpdateEvent& e);
+            //void update(OnUpdateEvent& e);
+            
         public:
             GameObject(glm::vec2 position, glm::vec2 size, std::string name = "Test");
             virtual ~GameObject();
@@ -56,9 +58,9 @@ namespace EngineF{
             glm::vec2 getPosition();
 
             
-
+            void update();
             virtual void userInit(OnUserInitEvent& e) {};
-            virtual void userUpdate(OnUserUpdateEvent& e) {};
+            virtual void userUpdate() {};
 
             virtual void onCollision(CollisionComponent* collision) {};
 

@@ -34,7 +34,7 @@ namespace EngineF{
         public:
 
             Scene(const std::string& m_Name, glm::mat4 camera = glm::mat4(1.0f));
-
+            void update();
 
             void constructScene(); 
             void testScene();

@@ -9,34 +9,36 @@ namespace EngineF{
         EventManager::getInstance().dispatchEvent(gameObjectCreatedEvent);
 
 
-        m_OnUpdateID = EventManager::getInstance().addListener<OnUpdateEvent>([this](OnUpdateEvent& e){
-            this->update(e);
-        });
 
         m_OnUserInitID = EventManager::getInstance().addListener<OnUserInitEvent>([this](OnUserInitEvent& e){
             this->userInit(e);
         });
 
-        m_OnUserUpdateID = EventManager::getInstance().addListener<OnUserUpdateEvent>([this](OnUserUpdateEvent& e){
-            this->userUpdate(e);
-        });
     }
 
     GameObject::~GameObject(){
-        EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUserUpdateID);
-        EventManager::getInstance().removeListener<OnUserUpdateEvent>(m_OnUpdateID);
-        removeAllChildren();
+        EventManager::getInstance().removeListener<OnUserInitEvent>(m_OnUserInitID);
+        for(size_t i = 0; i<m_Components.size(); i++){
+            m_Components.erase(m_Components.begin() + i);
+        }
         m_Components.clear();
+        removeAllChildren();
+        float size = m_Components.size();
+        LOG(size, LogType::MESSAGE);
         
         LOG("Destroyed", LogType::WARNING);
     }
 
 
-    void GameObject::update(OnUpdateEvent& e){
+    void GameObject::update(){
+
         if(m_Components.empty())
             return;
-
+        
         for(int i = 0; i<m_Components.size(); i++){
+            if(m_Components[i] == nullptr){
+                continue;
+            }
             m_Components[i]->update();
         }
     }

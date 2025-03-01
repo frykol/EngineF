@@ -25,7 +25,7 @@ namespace EngineF{
         public:
             CollisionComponent(GameObject* gameObject,CollisionComponent::CollisionType collisionType,const glm::vec2& boundary);
             CollisionComponent(GameObject* gameObject,CollisionComponent::CollisionType collisionType, float radius);
-            ~CollisionComponent();
+            ~CollisionComponent() override;
 
             void update() override;
             void init() override;

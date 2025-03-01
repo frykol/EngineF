@@ -27,6 +27,16 @@ namespace EngineF{
         m_IsConstructed = true;
     }
 
+    void Scene::update(){
+        if(!m_IsConstructed){
+            return;
+        }
+        for(auto& gameObject : m_GameObjects){
+            gameObject->update();
+            gameObject->userUpdate();
+        }
+    }
+
     void Scene::addGameObjectTest(GameObjectCreatedEvent& e){
         GameObject* g = e.gameObject;
         //std::unique_ptr<GameObject> gameObject(std::move(g));
